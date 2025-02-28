@@ -1,0 +1,26 @@
+created project
+npx create-vite@latest 
+
+tailwind configuration
+-------------------------
+
+npm install tailwindcss @tailwindcss/vite
+
+
+in file -> vite.config.ts
+import { defineConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
+import tailwindcss from "@tailwindcss/vite";
+export default defineConfig({
+  plugins: [
+    tailwindcss(),
+    reactRouter(),
+    tsconfigPaths(),
+  ],
+});
+
+tailwind.css
+@import "tailwindcss";
+
+
+npm install react-router-dom

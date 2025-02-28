@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@layer base {
+    .primary-button{
+        @apply text-sm bg-black text-white  py-2 px-4 rounded-md cursor-pointer
+    }
+
+    .secondary-button{
+        @apply text-sm font-semibold px-4 py-2 border border-gray-800 rounded-md hover:bg-gray-200
+    }
+
+
+    .hover-effect{
+        @apply p-2 hover:bg-gray-300 cursor-pointer active:underline
+    }
+
+    .input-field{
+        @apply w-full border border-gray-300 rounded-lg p-2
+    }
+
+
+    .left-right-arrow{
+        @apply absolute left-0 top-1/2 transform -translate-y-1/2 bg-transparent p-2 rounded-full
+    }
+
+    
+}
