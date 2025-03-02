@@ -14,6 +14,8 @@ function CategorySection() {
         fetchProductsByCategory,
         products,
         isLoading,
+        categories,
+        fetchCategories,
     } = useContext(AppContext);
 
     const [showAll, setShowAll] = useState(false);
@@ -95,28 +97,31 @@ function CategorySection() {
                                 </label>
                             </li>
                         ))}
-                        <button className="text-purple-500 cursor-pointer"
-                            onClick={() => setShowAll(!showAll)}>+ {products.length - 4} more</button>
+                        {products.length > 4 &&     (
+                            <button className="text-purple-500 cursor-pointer"
+                            onClick={() => setShowAll(!showAll)}>
+                                {showAll ? "Show less" : <>+ {products.length - 4} more</>}
+                        </button>
+                        )}
+                        
                     </ul>
                 </div>
 
-                {/* Price */}
-                {/* <div className="mb-6">
-                    <h3 className="font-semibold mb-2">Price</h3>
-                    <input type="range" 
-                    min="0" 
-                    max="5999" 
-                    className="w-full"
-                    step="100"
-                    value={priceRange}
-                    onChange={(e) => handlePriceRangeChange(e)} />
-                    <div className="flex justify-between text-sm mt-1">
-                       
-                        <span>{priceRange.min}</span>
-                        <span>{priceRange.max}</span>
-                    </div>
-                </div> */}
-
+                {/*  Also check other categories */}
+                <div className="mb-6">
+                    <h3 className="font-semibold mb-2">Other Categories</h3>
+                    <ul className="space-y-1">
+                        {categories.map((category) => (
+                            <li key={category.id}>    
+                                <Link to={`/user/shop/${category.name}`} className=" cursor-pointer">{category.name}</Link>
+                            </li>
+                        ))}
+                        {/* <button className="text-purple-500 cursor-pointer"
+                            onClick={() => setShowAll(!showAll)}>
+                                {showAll ? "Show less" : <>+ {products.length - 4} more</>}
+                                </button> */}
+                    </ul>
+                </div>  
 
 
             </div>

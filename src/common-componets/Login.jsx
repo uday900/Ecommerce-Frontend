@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AppContext, BASE_URL } from '../context/AppContext';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
+import api from '../api/api';
+import Loading from './Loading';
 const Login = () => {
   const navigate = useNavigate();
 
@@ -12,8 +13,11 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { isLoading, setIsLoading,
-    isAuthenticated, setIsAuthenticated,
+  const { 
+    isLoading, 
+    setIsLoading,
+    isAuthenticated,
+    setIsAuthenticated,
     info, setInfo,
     user, setUser,
     setIsAdmin, setIsUser,
@@ -30,7 +34,7 @@ const Login = () => {
 
     setIsLoading(true);
     try {
-      const response = await axios.post(`${BASE_URL}/auth/login`, credentials);
+      const response = await api.post(`/auth/login`, credentials);
 
       console.log(response)
       if ( response != null && response.data.status == 200) {
@@ -47,7 +51,7 @@ const Login = () => {
 
           toast.success(response.data.message);
           navigate('/');
-      } else if ( response.status == 401) {
+      } else if ( response.data.status == 401) {
           toast.error("Invalid credentials");
       }
        else {
@@ -62,6 +66,8 @@ const Login = () => {
   }
   return (
     <>
+    {isLoading && <Loading />}
+    
     <div className="flex h-screen text-white">
       {/* Left Section */}
       <div className="bg-cover bg-center" 
@@ -77,8 +83,8 @@ const Login = () => {
         <div className="w-3/4 max-w-md">
 
         <h2 className="text-2xl font-semibold mb-4">Sign In</h2>
-          <button className="w-full flex items-center justify-center py-2 mb-4 border rounded-md text-gray-600">
-            <span className="mr-2">🌐</span> {/* Replace with Google Icon */}
+          {/* <button className="w-full flex items-center justify-center py-2 mb-4 border rounded-md text-gray-600">
+            <span className="mr-2">🌐</span> 
             Continue With Google
           </button>
 
@@ -86,7 +92,7 @@ const Login = () => {
             <hr className="w-full border-gray-300" />
             <span className="px-4 text-sm text-gray-500">OR</span>
             <hr className="w-full border-gray-300" />
-          </div>
+          </div> */}
 
           {/* Input Fields */}
           <form onSubmit={(e)=> handleLogin(e)}>
@@ -135,7 +141,7 @@ const Login = () => {
           <div className=" mt-4">
             <p className="text-sm">
               Don’t have an account?{' '}
-              <Link to='/sign-up' className="text-indigo-600 hover:underline">
+              <Link to='/register' className="text-indigo-600 hover:underline">
                 Sign up
               </Link>
             </p>

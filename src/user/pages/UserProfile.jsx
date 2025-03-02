@@ -45,21 +45,21 @@ const UserProfile = () => {
         <div className="flex space-x-4 border-b pb-2 mb-6">
           <button
             onClick={() => handleTabChange('details')}
-            className={`pb-2 text-gray-700 ${activeTab === 'details' ? 'border-b-2 border-indigo-500' : ''
+            className={`cursor-pointer pb-2 text-gray-700 ${activeTab === 'details' ? 'border-b-2 border-indigo-500' : ''
               }`}
           >
             My Details
           </button>
           <button
             onClick={() => handleTabChange('orders')}
-            className={`pb-2 text-gray-700 ${activeTab === 'orders' ? 'border-b-2 border-indigo-500' : ''
+            className={`cursor-pointer pb-2 text-gray-700 ${activeTab === 'orders' ? 'border-b-2 border-indigo-500' : ''
               }`}
           >
             My Orders
           </button>
           <button
             onClick={() => handleTabChange('payment')}
-            className={`pb-2 text-gray-700 ${activeTab === 'payment' ? 'border-b-2 border-indigo-500' : ''
+            className={`cursor-pointer pb-2 text-gray-700 ${activeTab === 'payment' ? 'border-b-2 border-indigo-500' : ''
               }`}
           >
             Payment Methods

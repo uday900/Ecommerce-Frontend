@@ -5,14 +5,20 @@ import Loading from "../../common-componets/Loading";
 
 const AddProduct = () => {
   
-  const { register, handleSubmit, reset } = useForm();
-  const { categories, isLoading, addProduct, message, setMessage, error } = useContext(AppContext);
+  const { register, 
+    handleSubmit, 
+    reset,
+    formState: { errors },
+
+   } = useForm();
+  const { categories, isLoading, addProduct,  } = useContext(AppContext);
   
   const [size, setSize] = useState(""); // To store the current size input
   const [sizes, setSizes] = useState([]); // To store the list of sizes
   const [color, setColor] = useState(""); // To store the current size input
   const [colors, setColors] = useState([]); // To store the list of sizes
 
+  
   // Handler for adding size
   const handleAddSize = () => {
     if (size.trim() === "") return; // Prevent adding empty sizes
@@ -75,14 +81,16 @@ const AddProduct = () => {
     }
   };
   
+  useEffect(() => {
+    reset(
+      {
+        rating: 0,
+      }
+    );
 
-  useEffect(()=>{
-        const timer = setTimeout(() => {
-          setMessage('');
-        }, 2000)
-    
-        return () => clearTimeout(timer);
-      })
+  }, []); 
+
+ 
   return (
     <div className="flex justify-start">
       { isLoading && <Loading/>}
@@ -92,27 +100,28 @@ const AddProduct = () => {
         <div className="flex justify-start">
           <div className="bg-white p-6 rounded-lg w-full max-w-3xl">
             <h2 className="text-2xl font-bold mb-4">Add Product</h2>
-            { error && <p className='text-red-500'>{error}</p>}
-          { message && <p className='text-green-500'>{message}</p>}
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">Product Name</label>
-                <input
-                  type="text"
-                  className="w-full border border-gray-300 rounded-lg p-2"
-                  {...register("name", { required: true })}
-                  placeholder="Enter product name"
-                />
+                  <input
+                    type="text"
+                    className="w-full border border-gray-300 rounded-lg p-2"
+                    {...register("name", { required:  "Product name is required" })}
+                    placeholder="Enter product name"
+                  />
+                { errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
+              
               </div>
 
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">Description</label>
                 <textarea
                   className="w-full border border-gray-300 rounded-lg p-2"
-                  {...register("description", { required: true })}
+                  {...register("description", { required: "Product description is required" })}
                   placeholder="Enter product description"
                 ></textarea>
+                { errors.description && <p className="text-red-500 text-xs mt-1">{errors.description.message}</p>}
               </div>
 
               <div className="flex gap-4 mb-4">
@@ -122,18 +131,20 @@ const AddProduct = () => {
                   <input
                     type="number"
                     className="w-full border border-gray-300 rounded-lg p-2"
-                    {...register("price", { required: true })}
+                    {...register("price", { required: "Product price is required" })}
                     placeholder="Enter price"
                   />
+                  { errors.price && <p className="text-red-500 text-xs mt-1">{errors.price.message}</p>}
                 </div>
                 <div className="mb-4 w-1/2">
                   <label className="block text-sm font-medium mb-2">Brand</label>
                   <input
                     type="text"
                     className="w-full border border-gray-300 rounded-lg p-2"
-                    {...register("brand", { required: true })}
+                    {...register("brand", { required: "Product brand is required" })}
                     placeholder="Enter brand name"
                   />
+                  { errors.brand && <p className="text-red-500 text-xs mt-1">{errors.brand.message}</p>}
                 </div>
 
               </div>
@@ -165,7 +176,7 @@ const AddProduct = () => {
                     step="0.1"
                     max="5"
                     className="w-full border border-gray-300 rounded-lg p-2"
-                    {...register("rating", { required: true })}
+                    {...register("rating", { required: false })}
                     placeholder="Enter rating"
                   />
                 </div>
@@ -260,9 +271,10 @@ const AddProduct = () => {
                 <input
                   type="file"
                   className="w-full border border-gray-300 rounded-lg p-2"
-                  {...register("image", { required: true })}
+                  {...register("image", { required: "Image is required" })}
                   accept="image/*"
                 />
+                { errors.image && <p className="text-red-500 text-xs mt-1">{errors.image.message}</p>}
               </div>
 
 

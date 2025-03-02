@@ -12,6 +12,8 @@ import { Toaster } from "react-hot-toast"
 import Login from "./common-componets/Login"
 import Register from "./common-componets/Register"
 import SearchProducts from "./common-componets/SearchProducts"
+import ForgotPassword from "./common-componets/ForgotPassword"
+import ResetPassword from "./common-componets/ResetPassword"
 
 function App() {
 
@@ -41,8 +43,8 @@ function App() {
 
     {/* <Route path="/logout" element={<>Logout</>} /> */}
 
-    <Route path="/forgot-password" element={<>Forgot Password</>} />
-    <Route path="/reset-password" element={<>Reset Password</>} />
+    <Route path="/forgot-password" element={<ForgotPassword/> } />
+    <Route path="/reset-password" element={<ResetPassword/>} />
 
 
     <Route path="/search/:searchValue" element={<SearchProducts/>} />

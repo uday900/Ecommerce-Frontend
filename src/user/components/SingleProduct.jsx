@@ -58,7 +58,7 @@ function SingleProduct() {
       // addToCart(user.id, productId, quantity);
       placeOrder(user.id, productId, quantity);
     } else {
-      toast.error("Please login to add to cart");
+      toast.error("Please login to buy product");
     }
   };
 

@@ -4,6 +4,7 @@ import emptyCartImage from '../../assests/empty-cart.webp'
 import { useParams } from 'react-router-dom';
 import Loading from '../../common-componets/Loading';
 import toast from 'react-hot-toast';
+import AuthRequired from '../../common-componets/AuthRequired';
 
 function Cart() {
 
@@ -21,6 +22,7 @@ function Cart() {
 
     isLoggedIn,
     checkOut,
+
 
    } = useContext(AppContext);
 
@@ -55,6 +57,11 @@ function Cart() {
    
 
   },[])
+
+  if (!isAuthenticated) {
+    // toast.error("Please login to view cart");
+    return <AuthRequired/>
+  }
 
   return (
     <div>

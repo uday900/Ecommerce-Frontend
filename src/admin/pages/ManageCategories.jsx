@@ -11,6 +11,8 @@ export default function ManageCategories() {
   const [updatedCategoryId, setUpdatedCategoryId] = useState(null);
   const [updatedCategoryName, setUpdatedCategoryName] = useState(null);
 
+  const [validated, setValidated] = useState(true);
+
 
   const { categories, isLoading, 
     fetchCategories, addCategory, updateCategory,
@@ -18,9 +20,9 @@ export default function ManageCategories() {
      message, setMessage,
      error, setError } = useContext(AppContext);
 
-useEffect(()=>{
-  fetchCategories();
-},[])
+
+
+
   
 
   const handleAddCategory = () => {
@@ -47,16 +49,22 @@ useEffect(()=>{
   }
 
   useEffect(()=>{
+    fetchCategories();
+  },[])
+  useEffect(()=>{
     setError('');
   },[newCategory])
 
   useEffect(()=>{
-    const timer = setTimeout(() => {
-      setMessage('');
-    }, 2000)
-
-    return () => clearTimeout(timer);
-  })
+    console.log("new category", newCategory, validated);
+    if ( newCategory!== null && newCategory.trim() !== "" 
+  
+  ) {
+      setValidated(false);
+    } else {
+      setValidated(true);
+    }
+  },[newCategory, updatedCategoryName])
 
   return (
     <>
@@ -65,7 +73,7 @@ useEffect(()=>{
         <ConfirmationModal
           setIsConfirmationModalOpen={setIsConfirmationModalOpen}
           onConfirm={onConfirm}
-          message={`Are you sure you want to delete this category  ${newCategory}?`}
+          message={`Are you sure you want to delete this category?`}
         />
       )}
       {isLoading && <Loading />}
@@ -74,23 +82,26 @@ useEffect(()=>{
 
         {/* Add Category */}
         <div className="flex flex-col gap-4 mb-6">
-          { error && <p className='text-red-500'>{error}</p>}
-          { message && <p className='text-green-500'>{message}</p>}
-          {/* <p className='text-red-500'>{error}</p> */}
+      
+          <form action="" onSubmit={(e) => {e.preventDefault(); handleAddCategory()}}>
           <input
             type="text"
             className="border border-gray-300 rounded px-4 py-2 w-full"
             placeholder="Add new category"
             value={newCategory}
             onChange={(e) => setNewCategory(e.target.value)}
+            // required = {true}
+
           />
-          <div>
+          {/* change button dispaly when disabled to lower color */}
             <button
-              onClick={handleAddCategory} 
-              className="secondary-button">
+              className={`mt-2 ${validated ? 'disabled-button' : ' primary-button  '}`}
+              type='submit' 
+              disabled={validated}
+              >
               Add
             </button>
-          </div>
+          </form>
         </div>
 
         {/* List Categories */}
@@ -112,7 +123,8 @@ useEffect(()=>{
                   <div className="flex gap-2">
                     <button
                       onClick={()=>handleUpdateCategory(category.id, updatedCategoryName)}
-                      className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                      // className=""
+                      className={` ' bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 '}`}
                     >
                       Save
                     </button>
@@ -132,21 +144,23 @@ useEffect(()=>{
                   <span className="flex-1 ">{category.name}</span>
 
                   <div className="flex gap-2">
+                    {/* Edit Button */}
                     <button
+                      className="cursor-pointer hover:text-sky-500"
                       onClick={() => {
                         setUpdatedCategoryId(category.id);
                         setUpdatedCategoryName(category.name);
                       }}
-                        
-                      className="">
+                      >
                       <i className="fa-solid fa-pencil"></i>
                     </button>
                     <button
                     onClick={() => {
                       setIsConfirmationModalOpen(true);
                       setCurrentCategoryId(category.id);
-                      setNewCategory(category.name);
+                      // setNewCategory(category.name);
                     }}
+                    className="cursor-pointer hover:text-red-500"
                     >
                       <i className="fa-solid fa-trash-can"></i>
                     </button>

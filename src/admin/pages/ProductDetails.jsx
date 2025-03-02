@@ -107,19 +107,21 @@ const ProductDetails = () => {
             </li>
             <li>
               <strong>Available Sizes: </strong>
-              {product.sizes && product.sizes.map((size, index) => (
+              {product.sizes ? product.sizes.map((size, index) => (
                 <span key={index} className="bg-gray-200 text-gray-800 px-2 py-1 rounded mr-1">
                   {size}
                 </span>
-              ))}
+              )) : "No sizes available"}
             </li>
             <li>
               <strong>Colors: </strong>
-              {product.colors && product.colors.map((color, index) => (
+              { console.log(product.colors)}
+              {product.colors ? product.colors.map((color, index) => (
                 <span key={index} className="bg-gray-200 text-gray-800 px-2 py-1 rounded mr-1">
                   {color}
                 </span>
-              ))}
+              ))
+            : "No colors available"}
             </li>
           </ul>
         </div>
