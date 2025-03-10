@@ -17,22 +17,24 @@ import ResetPassword from "./common-componets/ResetPassword"
 
 function App() {
 
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
   const { 
-    isAuthenticated,
-    isAdmin,
-    info, setInfo,
-    setUser,
+ 
     isLoggedIn,
-    
+    fetchCategories,
+    fetchCarouselImages,
 
   } = useContext(AppContext)
   
   useEffect(()=>{
     isLoggedIn();
+    fetchCategories();
+    fetchCarouselImages();
+
   },[])
   return (
    <>
+   {/* { isLoading && <Loading/>} */}
    <Navbar/>
    <ScrollToTop/>
    <Routes>

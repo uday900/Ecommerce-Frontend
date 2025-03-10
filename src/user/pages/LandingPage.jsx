@@ -38,10 +38,10 @@ function LandingPage() {
   const loadProducts = (category) => {
     fetchProductsByCategory(category);
   }
-  useEffect(() => {
-    fetchCategories();
-    fetchCarouselImages();
-  }, [])
+  // useEffect(() => {
+  //   fetchCategories();
+  //   fetchCarouselImages();
+  // }, [])
 
   useEffect(() => {
     const interval = setInterval(() => {

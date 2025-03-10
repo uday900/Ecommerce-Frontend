@@ -10,6 +10,7 @@ function ForgotPassword() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [sent, setSent] = useState(false);
+    const [otp, setOtp] = useState(null);
 
     const {
         isLoading,
@@ -27,12 +28,11 @@ function ForgotPassword() {
         e.preventDefault();
         try {
             const response = await api.post(`/auth/forgot-password?email=${email}`);
-            // console.log(response)
+            console.log(response)
+
             if (response.data.status === 200) {
-                // Password reset email sent successfully
-                // console.log('Password reset email sent successfully');
-                toast.success('Password reset link sent successfully to your email');
-                // navigate('/reset-password');
+                setSent(true);
+                toast.success('OTP has sent successfully to your email');
             } 
             else {
                 // Handle error
@@ -43,25 +43,43 @@ function ForgotPassword() {
             
                 toast.error('Something went wrong. Please try again later.');
             
-            
-            // toast.error('Error sending password reset email');
-            
-            // console.error('Error sending password reset email:', error.response.data);
         } finally {
             setIsLoading(false);
         }
-        setSent(true);
+        
     };
 
-    if (isLoading) {
-        return <Loading />
+    async function handleVerifyOtp(){
+        setIsLoading(true);
+        
+        try {
+            const response = await api.post(`/auth/verify-otp?otp=${otp}&email=${email}`);
+            if (response != null && response.data.status == 200) {
+                toast.success(response.data.message);
+                // localStorage.setItem("resetToken", response.data.token);
+                navigate(`/reset-password?username=${email}&token=${response.data.token}`);
+            } else {
+                toast.error(response.data.message);
+                console.log(response.data.message);
+            }
+        } catch (error) {
+            toast.error("Error verifying otp");
+            console.log( error);
+        } finally {
+            setIsLoading(false);
+        }
     }
+
+    // if (isLoading) {
+    //     return <Loading />
+    // }
     return (
         <div>
+            { isLoading && <Loading />}
             <div className="flex h-screen mt-5 justify-center text-gray-800">
                 <div className="w-3/4 max-w-md">
                     <h2 className="text-2xl font-semibold mb-4 text-center">Forgot Password</h2>
-                    <form onSubmit={handleFormSubmit}>
+                    <form >
 
                         <div className="mb-4">
                             <label className="block text-sm font-medium mb-1" htmlFor="email">
@@ -79,16 +97,26 @@ function ForgotPassword() {
                         </div>
 
                         <button
-                            type="submit"
-                            className="primary-button w-full"
+                            type="button"
+                            className={`primary-button w-full ${email === '' && 'disabled-button'}`}
+                            onClick={(e) => handleFormSubmit(e)}
+                            disabled={email === '' }
                         >
-                           {sent ?<span>Resend Password Reset Link</span> : <span>Send Password Reset Link</span>} 
+                           {sent ? <span>Resend OTP</span> : <span>Generate OTP</span>} 
                         </button>
+
+
                         { sent && (
-                            <div className="mt-4 text-center">
-                                <p className="text-sm">
-                                    Password reset link sent successfully to your email
-                                </p>
+                            <div className='mt-2'>
+
+                                <input type='text'
+                                onChange={(e) => setOtp(e.target.value)}
+                                className='w-full px-3 py-2 border border-slate-400 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500'
+
+                                />
+
+                                <button type = 'button' className='mt-2 primary-button bg-green-400'
+                                onClick={()=> handleVerifyOtp()}>Verify OTP</button>
                             </div>
                         )}
                     </form>

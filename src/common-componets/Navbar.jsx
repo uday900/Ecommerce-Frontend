@@ -44,12 +44,12 @@ const Navbar = () => {
   }
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    fetchCategories();
-    isLoggedIn();
+  //   // fetchCategories();
+  //   // isLoggedIn();
 
-  }, []);
+  // }, []);
 
   useEffect(() => {
     if (isAuthenticated && user != null && isUser) {
@@ -98,7 +98,7 @@ const Navbar = () => {
       <div className="flex items-center space-x-6">
         {/* Search Bar */}
         <div className="relative">
-
+<form action="">
           <input
             type="text"
             placeholder="Search"
@@ -110,6 +110,7 @@ const Navbar = () => {
             onClick={() => searchValue && navigate(`/search/${searchValue}`)}>
             <i className="fas fa-search absolute top-2 right-2 text-gray-400 hover:text-gray-600"></i>
           </button>
+          </form>
         </div>
 
 

@@ -13,7 +13,7 @@ export const AppProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
 
     const [categories, setCategories] = useState([]);
-    const [category, setCategory] = useState({name: "", id: ""});
+    const [category, setCategory] = useState({ name: "", id: "" });
     const [carouselImages, setCarouselImages] = useState([]);
 
     const [users, setUsers] = useState([]);
@@ -48,32 +48,49 @@ export const AppProvider = ({ children }) => {
     const [message, setMessage] = useState("");
     const [failedToFetch, setFailedToFetch] = useState(false);
 
-    function isLoggedIn(){
-        
+    async function isLoggedIn() {
+
         const token = localStorage.getItem("token");
         const user = JSON.parse(localStorage.getItem("user"));
 
+
+
         // console.log(token, user)
 
-        if(token && user){
-            // console.log("user login")
-            setIsAuthenticated(true);
-            setIsAdmin(user.role === "ADMIN");
-            setIsUser(user.role === "USER");
-            setUser(user);
-            // toast.success("Login status checked successfully");
+        if (token && user) {
 
-            return true;
-        } 
+            setIsLoading(true);
+            try {
+
+                const response = await api.post(`/auth/verify-account?token=${token}`)
+                if (response != null && response.status == 200) {
+                    setIsAuthenticated(true);
+                    setIsAdmin(user.role === "ADMIN");
+                    setIsUser(user.role === "USER");
+                    setUser(user);
+                    // toast.success("Login status checked successfully");
+                    setIsLoading(false);
+                    return true;
+                } else {
+                    toast.error(response.data.message);
+                    console.log(response.data.message);
+                }
+            } catch (error) {
+                toast.error("Error checking login status");
+                console.log("Error checking login status:", error);
+            } finally{
+                setIsLoading(false);
+            }
+        }
 
         setIsAuthenticated(false);
         setIsAdmin(false);
         setIsUser(false);
         setUser({});
-            // toast.error("Please login first");
-        
+        // toast.error("Please login first");
 
-        
+
+
 
         return false;
     }
@@ -86,7 +103,7 @@ export const AppProvider = ({ children }) => {
             console.log(response)
             if (response.data.status == 200) {
                 setCategories(response.data.categories);
-            } else{
+            } else {
                 // console.log(response.data.message);
                 toast.error(response.data.message);
             }
@@ -99,16 +116,16 @@ export const AppProvider = ({ children }) => {
         }
     }
 
-    async function addCategory(category){
+    async function addCategory(category) {
         setIsLoading(true);
         console.log("Adding category...");
         try {
             // const response = await axios.post(`${BASE_URL}/category/add`, category);
             const response = await api.post(`/category/add`, category);
-            if ( response != null && response.data.status == 200) {
+            if (response != null && response.data.status == 200) {
                 //  setMessage(response.data.message);
-                 toast.success(response.data.message);
-                 fetchCategories();
+                toast.success(response.data.message);
+                fetchCategories();
             } else {
                 // setError(response.data.message);
                 toast.error(response.data.message);
@@ -123,19 +140,19 @@ export const AppProvider = ({ children }) => {
     }
 
     // category { name, id }    
-    async function updateCategory(category){
+    async function updateCategory(category) {
         setIsLoading(true);
         console.log("Updating category...");
         try {
             // const response = await axios.put(`${BASE_URL}/category/update/${category.id}`, category);
             const response = await api.put(`/category/update/${category.id}`, category);
-            if ( response != null && response.data.status == 200) {
+            if (response != null && response.data.status == 200) {
                 //  setMessage(response.data.message);
 
-                 toast.success(response.data.message);
-                 fetchCategories();
+                toast.success(response.data.message);
+                fetchCategories();
             } else {
-                
+
                 toast.error(response.data.message);
                 console.log("Error updating category");
             }
@@ -147,15 +164,15 @@ export const AppProvider = ({ children }) => {
         }
     }
 
-    async function deleteCategory(categoryId){
+    async function deleteCategory(categoryId) {
         setIsLoading(true);
         console.log("Deleting category...");
         try {
             // const response = await axios.delete(`${BASE_URL}/category/delete/${categoryId}`);
             const response = await api.delete(`/category/delete/${categoryId}`);
-            if ( response != null && response.data.status == 200) {
-                 toast.success(response.data.message);
-                 fetchCategories();
+            if (response != null && response.data.status == 200) {
+                toast.success(response.data.message);
+                fetchCategories();
             } else {
                 toast.error(response.data.message);
                 console.log("Error deleting category");
@@ -168,19 +185,19 @@ export const AppProvider = ({ children }) => {
         }
     }
 
-    async function fetchCategoryById(categoryId){
+    async function fetchCategoryById(categoryId) {
         setIsLoading(true);
         console.log("Fetching category...");
         try {
             // const response =await axios.get(`${BASE_URL}/category/fetch/${categoryId}`);
-            const response =await api.get(`/category/fetch/${categoryId}`);
+            const response = await api.get(`/category/fetch/${categoryId}`);
 
-            
+
             if (response.data.status == 200) {
                 setCategory(response.data.category);
                 toast.success(response.data.message);
                 // setProduct(response.data.category);
-            } else{
+            } else {
                 // setError(response.data.message);
                 toast.error(response.data.message);
                 console.log(response.data.message);
@@ -199,12 +216,12 @@ export const AppProvider = ({ children }) => {
         console.log("Fetching All products...");
         try {
             // const response =await axios.get(`${BASE_URL}/products/fetch`);
-            const response =await api.get(`/products/fetch`);
+            const response = await api.get(`/products/fetch`);
 
-            
+
             if (response.data.status == 200) {
                 setProducts(response.data.products);
-            } else{
+            } else {
                 // setError(response.data.message);
                 toast.error(response.data.message);
                 console.log(response.data.message);
@@ -218,16 +235,16 @@ export const AppProvider = ({ children }) => {
         }
     }
 
-    async function fetchProductById(productId){
+    async function fetchProductById(productId) {
         setIsLoading(true);
         console.log("Fetching product... by id");
         try {
             // const response =await axios.get(`${BASE_URL}/products/fetch/${productId}`);
-            const response =await api.get(`/products/fetch/${productId}`);
-            
+            const response = await api.get(`/products/fetch/${productId}`);
+
             if (response.data.status == 200) {
                 setProduct(response.data.product);
-            } else{
+            } else {
                 // setError(response.data.message);
                 toast.error(response.data.message);
                 console.log(response.data.message);
@@ -240,16 +257,16 @@ export const AppProvider = ({ children }) => {
         }
     }
 
-    async function updateProduct(productId, updatedProduct){
+    async function updateProduct(productId, updatedProduct) {
         setIsLoading(true);
         console.log("Updating product...");
         try {
             // const response = await axios.put(`${BASE_URL}/products/update/${productId}`, updatedProduct);
             const response = await api.put(`/products/update/${productId}`, updatedProduct);
-            if ( response != null && response.data.status == 200) {
+            if (response != null && response.data.status == 200) {
                 //  setMessage(response.data.message);
-                 toast.success(response.data.message);
-                 fetchProducts();
+                toast.success(response.data.message);
+                fetchProducts();
             } else {
                 // setError(response.data.message);
                 toast.error(response.data.message);
@@ -263,17 +280,17 @@ export const AppProvider = ({ children }) => {
         }
     }
 
-    async function deleteProduct(productId){
+    async function deleteProduct(productId) {
         setIsLoading(true);
         console.log("Deleting product...");
         try {
             // const response = await axios.delete(`${BASE_URL}/products/delete/${productId}`);
             const response = await api.delete(`/products/delete/${productId}`);
 
-            if ( response != null && response.data.status == 200) {
+            if (response != null && response.data.status == 200) {
                 //  setMessage(response.data.message);
-                 toast.success(response.data.message);
-                 fetchProducts();
+                toast.success(response.data.message);
+                fetchProducts();
             } else {
                 // setError(response.data.message);
                 toast.error(response.data.message);
@@ -287,17 +304,17 @@ export const AppProvider = ({ children }) => {
         }
     }
 
-    async function addProduct(product){
+    async function addProduct(product) {
         setIsLoading(true);
         console.log("Adding product...");
         try {
             // const response = await axios.post(`${BASE_URL}/products/add`, product);
             const response = await api.post(`/products/add`, product);
 
-            if ( response != null && response.data.status == 200) {
+            if (response != null && response.data.status == 200) {
                 //  setMessage(response.data.message);
-                 toast.success(response.data.message);
-                 fetchProducts();
+                toast.success(response.data.message);
+                fetchProducts();
             } else {
                 // setError(response.data.message);
                 toast.error(response.data.message);
@@ -311,18 +328,18 @@ export const AppProvider = ({ children }) => {
         }
     }
 
-    async function fetchProductsByCategory(categoryName){
+    async function fetchProductsByCategory(categoryName) {
         setIsLoading(true);
         console.log("Fetching products by category...");
         try {
             // const response =await axios.get(`${BASE_URL}/products/fetch/category?categoryName=${categoryName}`);
-            const response =await api.get(`/products/fetch/category?categoryName=${categoryName}`);
-            
+            const response = await api.get(`/products/fetch/category?categoryName=${categoryName}`);
+
             if (response.data.status == 200) {
                 setProducts(response.data.products);
                 setIsLoading(false);
                 return response.data.products;
-            } else{
+            } else {
                 // setError(response.data.message);
                 toast.error(response.data.message);
                 console.log(response.data.message);
@@ -340,7 +357,7 @@ export const AppProvider = ({ children }) => {
         console.log("Fetching products by search value")
         try {
             const response = await api.get(`/products/fetch/search?searchValue=${searchValue}`)
-            if ( response.data.status == 200){
+            if (response.data.status == 200) {
                 setProducts(response.data.products);
 
             } else {
@@ -360,11 +377,11 @@ export const AppProvider = ({ children }) => {
         console.log("Fetching carousel images...");
         try {
             // const response =await axios.get(`${BASE_URL}/carousels/fetch`);
-            const response =await api.get(`/carousels/fetch`);
-            
+            const response = await api.get(`/carousels/fetch`);
+
             if (response.data.status == 200) {
                 setCarouselImages(response.data.carouselList);
-            } else{
+            } else {
                 // setError(response.data.message);
                 toast.error(response.data.message);
                 console.log(response.data.message);
@@ -372,20 +389,20 @@ export const AppProvider = ({ children }) => {
         } catch (error) {
             toast.error("Error fetching carousel images");
             console.log("Error fetching carousel images:", error);
-            
+
         } finally {
             setIsLoading(false);  // Stop loading after response or error
         }
     }
-    async function addCarouselImage(image){
+    async function addCarouselImage(image) {
         setIsLoading(true);
         console.log("Adding carousel image...");
         try {
             // const response = await axios.post(`${BASE_URL}/carousels/add`, image);
             const response = await api.post(`/carousels/add`, image);
-            if ( response != null && response.data.status == 200) {
-                 toast.success(response.data.message);
-                 fetchCarouselImages();
+            if (response != null && response.data.status == 200) {
+                toast.success(response.data.message);
+                fetchCarouselImages();
             } else {
                 toast.error(response.data.message);
                 console.log("Error adding carousel image");
@@ -393,20 +410,20 @@ export const AppProvider = ({ children }) => {
         } catch (error) {
             toast.error("Error adding carousel image");
             console.log("Error adding carousel image:", error);
-        } finally { 
+        } finally {
             setIsLoading(false);  // Stop loading after response or error
         }
     }
 
-    async function deleteCarouselImage(imageId){
+    async function deleteCarouselImage(imageId) {
         setIsLoading(true);
         console.log("Deleting carousel image...");
         try {
             // const response = await axios.delete(`${BASE_URL}/carousels/delete/${imageId}`);
             const response = await api.delete(`/carousels/delete/${imageId}`);
-            if ( response != null && response.data.status == 200) { 
-                 toast.success(response.data.message);
-                 fetchCarouselImages();
+            if (response != null && response.data.status == 200) {
+                toast.success(response.data.message);
+                fetchCarouselImages();
             } else {
                 toast.error(response.data.message);
                 console.log("Error deleting carousel image");
@@ -425,11 +442,11 @@ export const AppProvider = ({ children }) => {
         console.log("Fetching All users...");
         try {
             // const response =await axios.get(`${BASE_URL}/users/fetch`);
-            const response =await api.get(`/users/fetch`);
-            
+            const response = await api.get(`/users/fetch`);
+
             if (response.data.status == 200) {
                 setUsers(response.data.users);
-            } else{
+            } else {
                 toast.error(response.data.message);
                 console.log(response.data.message);
             }
@@ -446,11 +463,11 @@ export const AppProvider = ({ children }) => {
         console.log("Fetching user...by id", userId);
         try {
             // const response =await axios.get(`${BASE_URL}/users/fetch/${userId}`);
-            const response =await api.get(`/users/fetch/${userId}`);
-            
+            const response = await api.get(`/users/fetch/${userId}`);
+
             if (response.data.status == 200) {
                 setUser(response.data.user);
-            } else{
+            } else {
                 toast.error(response.data.message);
                 console.log(response.data.message);
             }
@@ -469,11 +486,11 @@ export const AppProvider = ({ children }) => {
         console.log("Fetching All orders...");
         try {
             // const response =await axios.get(`${BASE_URL}/orders/fetch`);
-            const response =await api.get(`/orders/fetch`);
-            
+            const response = await api.get(`/orders/fetch`);
+
             if (response.data.status == 200) {
                 setOrders(response.data.orders);
-            } else{
+            } else {
                 toast.error(response.data.message);
                 console.log(response.data.message);
             }
@@ -490,12 +507,12 @@ export const AppProvider = ({ children }) => {
         console.log("Updating order status...");
         try {
             // const response =await axios.put(`${BASE_URL}/orders/update-status/${id}?status=${newStatus}`);
-            const response =await api.put(`/orders/update-status/${id}?status=${newStatus}`);
-            
+            const response = await api.put(`/orders/update-status/${id}?status=${newStatus}`);
+
             if (response.data.status == 200) {
                 toast.success(response.data.message);
                 fetchOrders();
-            } else{
+            } else {
                 toast.error(response.data.message);
                 console.log(response.data.message);
             }
@@ -512,12 +529,12 @@ export const AppProvider = ({ children }) => {
         console.log("Fetching user orders...", userId);
         try {
             // const response =await axios.get(`${BASE_URL}/orders/fetch/user/${userId}`);
-            const response =await api.get(`/orders/fetch/user/${userId}`);
-            
+            const response = await api.get(`/orders/fetch/user/${userId}`);
+
             if (response.data.status == 200) {
                 setOrders(response.data.orders);
                 // console.log(response.data.orders);
-            } else{
+            } else {
                 toast.error(response.data.message);
                 console.log(response.data.message);
             }
@@ -530,15 +547,15 @@ export const AppProvider = ({ children }) => {
         }
     }
 
-    async function placeOrder(userId, productId, quantity){
+    async function placeOrder(userId, productId, quantity) {
         setIsLoading(true);
         console.log("Placing order...");
         try {
             const response = await api.post(`/orders/place-order/${userId}?productId=${productId}&quantity=${quantity}`);
 
-            if ( response != null && response.data.status == 200) { 
-                 toast.success(response.data.message);
-            } else{
+            if (response != null && response.data.status == 200) {
+                toast.success(response.data.message);
+            } else {
                 toast.error(response.data.message);
                 console.log(response.data.message);
             }
@@ -550,14 +567,14 @@ export const AppProvider = ({ children }) => {
         }
     }
 
-    async function checkOut(userId){
+    async function checkOut(userId) {
         setIsLoading(true)
         console.log("check-out for user")
         try {
             const response = await api.post(`/orders/check-out/${userId}`);
-            if ( response != null && response.data.status == 200){
+            if (response != null && response.data.status == 200) {
                 toast.success(response.data.message);
-            } else{
+            } else {
                 toast.error(response.data.message);
                 console.log(response.data.message);
             }
@@ -569,7 +586,7 @@ export const AppProvider = ({ children }) => {
         }
     }
 
-    
+
 
     // cart api
 
@@ -578,11 +595,11 @@ export const AppProvider = ({ children }) => {
         console.log("Fetching user cart...", userId);
         try {
             // const response =await axios.get(`${BASE_URL}/users/cart/fetch/${userId}`);
-            const response =await api.get(`/users/cart/fetch/${userId}`);
-            
+            const response = await api.get(`/users/cart/fetch/${userId}`);
+
             if (response.data.status == 200) {
                 setCart(response.data.cart);
-            } else{
+            } else {
                 toast.error(response.data.message);
                 console.log(response.data.message);
             }
@@ -601,10 +618,10 @@ export const AppProvider = ({ children }) => {
             // const response = await axios.post(`${BASE_URL}/users/cart/add/${userId}?productId=${productId}`);
             const response = await api.post(`/users/cart/add/${userId}?productId=${productId}`);
 
-            if ( response != null && response.data.status == 200) {
-                 fetchCart(userId);
-                 fetchCartCount(userId);
-                 toast.success(response.data.message);
+            if (response != null && response.data.status == 200) {
+                fetchCart(userId);
+                fetchCartCount(userId);
+                toast.success(response.data.message);
             } else {
                 // setError(response.data.message);
                 toast.error(response.data.message);
@@ -625,10 +642,10 @@ export const AppProvider = ({ children }) => {
         try {
             // const response = await axios.delete(`${BASE_URL}/users/cart/remove/${userId}/${cartItemId}`);
             const response = await api.delete(`/users/cart/remove/${userId}/${cartItemId}`);
-            if ( response != null && response.data.status == 200) {
-                 toast.success(response.data.message);
-                 fetchCart(userId);
-                 fetchCartCount(userId);
+            if (response != null && response.data.status == 200) {
+                toast.success(response.data.message);
+                fetchCart(userId);
+                fetchCartCount(userId);
             } else {
                 toast.error(response.data.message);
                 console.log("Error removing from cart");
@@ -648,12 +665,12 @@ export const AppProvider = ({ children }) => {
 
         try {
             // const response =await axios.get(`${BASE_URL}/users/cart/count/${userId}`);
-            const response =await api.get(`/users/cart/count/${userId}`);
-            
+            const response = await api.get(`/users/cart/count/${userId}`);
+
             if (response.data.status == 200) {
                 setCartCount(response.data.cartCount);
                 // response.data.cartCount;
-            } else{
+            } else {
                 toast.error(response.data.message);
                 console.log(response.data.message);
             }
@@ -670,12 +687,12 @@ export const AppProvider = ({ children }) => {
         console.log("Incrementing quantity...");
         try {
             // const response =await axios.post(`${BASE_URL}/users/cart/increment/${userId}?cartItemId=${cartItemId}`);
-            const response =await api.post(`/users/cart/increment/${userId}?cartItemId=${cartItemId}`);
-            
+            const response = await api.post(`/users/cart/increment/${userId}?cartItemId=${cartItemId}`);
+
             if (response.data.status == 200) {
                 toast.success(response.data.message);
                 fetchCart(userId);
-            } else{
+            } else {
                 toast.error(response.data.message);
                 console.log(response.data.message);
             }
@@ -692,12 +709,12 @@ export const AppProvider = ({ children }) => {
         console.log("Decrementing quantity...");
         try {
             // const response =await axios.post(`${BASE_URL}/users/cart/decrement/${userId}?cartItemId=${cartItemId}`);
-            const response =await api.post(`/users/cart/decrement/${userId}?cartItemId=${cartItemId}`);
-            
+            const response = await api.post(`/users/cart/decrement/${userId}?cartItemId=${cartItemId}`);
+
             if (response.data.status == 200) {
                 toast.success(response.data.message);
                 fetchCart(userId);
-            } else{
+            } else {
                 toast.error(response.data.message);
                 console.log(response.data.message);
             }
@@ -709,25 +726,25 @@ export const AppProvider = ({ children }) => {
         }
     }
 
-        
-    
+
+
 
     const values = {
 
         isUser, isAdmin, isAuthenticated, isLoading,
         setIsAuthenticated, setIsLoading, setIsUser, setIsAdmin,
         info, setInfo,
-        
+
         failedToFetch,
         categories, setCategories,
         fetchCategories, addCategory, updateCategory, deleteCategory, fetchCategoryById,
-        
+
         products, setProducts,
         product, setProduct,
         fetchProducts, addProduct, updateProduct, deleteProduct, fetchProductById,
         fetchProductsByCategory,
         fetchProductsBySearchValue,
-        
+
         message, setMessage,
         error, setError,
 
@@ -748,11 +765,11 @@ export const AppProvider = ({ children }) => {
         fetchCart, addToCart, removeFromCart, fetchCartCount, incrementQuantity, decrementQuantity,
 
         isLoggedIn,
-        
+
 
     }
 
-    
+
     return (
         <AppContext.Provider
             value={values}>

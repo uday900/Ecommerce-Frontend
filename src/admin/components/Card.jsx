@@ -18,7 +18,7 @@ function Card({product}) {
 
 
             <img src={newImageUrl} alt="" />
-            <h3 className="text-lg font-semibold mt-4 hover:underline cursor-pointer">{product.name}</h3>
+            <h3 className="text-lg font-semibold mt-4 cursor-pointer">{product.name}</h3>
             <p className="text-gray-700 mt-2">Price: ${product.price}</p>
             <button
               className="primary-button mt-1"

@@ -52,6 +52,15 @@ function SearchProducts() {
   useEffect(() => {
       setFilterProducts(products);
   }, [products]);
+
+  if (filterProducts.length === 0) {
+    return (
+      <div className='flex flex-col items-center justify-center min-h-screen'>
+        <h1 className="text-2xl font-bold mb-4">No products found</h1>
+        <p className="text-gray-600">There are no products that match the search criteria.</p>
+      </div>
+    )
+  }
   return (
     <div>
        {isLoading && <Loading />}
@@ -77,11 +86,6 @@ function SearchProducts() {
                         
                     </ul>
                 </div>
-
-               
-
-
-
             </div>
 
 
@@ -101,7 +105,8 @@ function SearchProducts() {
                         <button>Recommended</button>
                     </div>
                 </div>
-
+                
+                
                 <div className="grid grid-cols-3 gap-6">
                     {filterProducts.map((product, index) => (
                         <Card key={index} product={product} categoryName={product.categoryName} />

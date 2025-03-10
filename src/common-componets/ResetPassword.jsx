@@ -1,15 +1,19 @@
-import React, { useContext, useState } from 'react'
-import { useParams, Link, useSearchParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react'
+import { useParams, Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import api from '../api/api';
 import toast from 'react-hot-toast';
+import { set } from 'react-hook-form';
 
 function ResetPassword() {
   // const { username, token } = useParams();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams(); // Hook to get query params
 
   const username = searchParams.get('username');
   const token = searchParams.get('token');
+
+  // const resetToken = localStorage.getItem('resetToken');
 
 
   const [password, setPassword] = useState('');
@@ -37,6 +41,8 @@ function ResetPassword() {
         // Password reset successful
         // console.log('Password reset successful');
         toast.success('Password reset successful');
+        setPassword('');
+        setConfirmedPassword('');
         // navigate('/login');
       } else {
         // Password reset failed
@@ -51,6 +57,13 @@ function ResetPassword() {
       setIsLoading(false);
     }
   }
+  useEffect(() => {
+    
+    if (!token && !username) {
+      navigate('/forgot-password');
+    }
+
+  }, []);
   return (
     <div><div>
     <div className="flex h-screen mt-5 justify-center text-gray-800">

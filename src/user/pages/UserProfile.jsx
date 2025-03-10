@@ -57,13 +57,13 @@ const UserProfile = () => {
           >
             My Orders
           </button>
-          <button
+          {/* <button
             onClick={() => handleTabChange('payment')}
             className={`cursor-pointer pb-2 text-gray-700 ${activeTab === 'payment' ? 'border-b-2 border-indigo-500' : ''
               }`}
           >
             Payment Methods
-          </button>
+          </button> */}
         </div>
 
         {/* Content Section */}
