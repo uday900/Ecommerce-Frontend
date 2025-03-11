@@ -53,15 +53,14 @@ export const AppProvider = ({ children }) => {
         const token = localStorage.getItem("token");
         const user = JSON.parse(localStorage.getItem("user"));
 
-
-
         // console.log(token, user)
 
         if (token && user) {
 
+            // console.log("checking user exists or not")
+            // console.log(token)
             setIsLoading(true);
             try {
-
                 const response = await api.post(`/auth/verify-account?token=${token}`)
                 if (response != null && response.status == 200) {
                     setIsAuthenticated(true);
@@ -72,23 +71,33 @@ export const AppProvider = ({ children }) => {
                     setIsLoading(false);
                     return true;
                 } else {
+                    console.log("removing credentials")
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("user");
+                    console.log(localStorage.getItem("token"))
                     toast.error(response.data.message);
-                    console.log(response.data.message);
+                    // console.log(response.data.message);
                 }
             } catch (error) {
                 toast.error("Error checking login status");
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                
                 console.log("Error checking login status:", error);
+                setIsLoading(false);
+                return false;
             } finally{
                 setIsLoading(false);
             }
         }
 
-        setIsAuthenticated(false);
+        else{
+            setIsAuthenticated(false);
         setIsAdmin(false);
         setIsUser(false);
         setUser({});
         // toast.error("Please login first");
-
+        }
 
 
 

@@ -59,7 +59,7 @@ function Dashboard() {
           <div className="flex gap-4 mb-6">
             <button
               onClick={() => navigate('/admin/manage-categories')}
-              className="primary-button cursor-pointer hover:bg-transparent hover:text-black border border-black"
+              className="primary-button "
             >
               Manage Categories
             </button>

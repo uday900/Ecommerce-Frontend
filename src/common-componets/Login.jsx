@@ -123,7 +123,7 @@ const Login = () => {
                 />
                 <span className="absolute top-2 right-3 text-sm cursor-pointer text-gray-500"
                   onClick={() => setShowPassword(!showPassword)}
-                >{showPassword ? <i className="fa-solid fa-eye-slash"></i>: <i className="fa-solid fa-eye"></i>}</span>
+                >{showPassword ? <i class="fa-solid fa-eye-slash"></i>: <i class="fa-solid fa-eye"></i>}</span>
               </div>
             </div>
             <div className="text-right mb-4">

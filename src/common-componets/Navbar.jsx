@@ -105,10 +105,10 @@ const Navbar = () => {
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             className="w-96 px-4 py-1.5 text-sm text-gray-600 bg-gray-100 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-          />
+          required/>
           <button className="cursor-pointer "
             onClick={() => searchValue && navigate(`/search/${searchValue}`)}>
-            <i className="fas fa-search absolute top-2 right-2 text-gray-400 hover:text-gray-600"></i>
+            <i class="fas fa-search absolute top-2 right-2 text-gray-400 hover:text-gray-600"></i>
           </button>
           </form>
         </div>
@@ -120,7 +120,7 @@ const Navbar = () => {
         {isAuthenticated ? <>
 
           {isAdmin ? <>
-            <Link to='/admin/dashboard' className="">
+            <Link to='/admin/dashboard' className="hover:underline">
               admin dashboard
             </Link>
 

@@ -11,7 +11,7 @@ const ProductDetails = () => {
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-  const { product, isLoading, message, error, fetchProductById } = useContext(AppContext);
+  const { product, isLoading, message, error, fetchProductById, deleteProduct} = useContext(AppContext);
 
   const newImageUrl = product.imageData ? `data:image/jpeg;base64,${product.imageData}` : null;
 
@@ -23,7 +23,8 @@ const ProductDetails = () => {
 
   function onConfirm(isConfirmed) {
     if (isConfirmed) {
-      // handleDelete(id);
+      deleteProduct(productId);
+      navigate('/admin/dashboard')
       console.log("confirm to delete")
     }
     setIsModalOpen(false);
@@ -34,10 +35,7 @@ const ProductDetails = () => {
     navigate(`/admin/update-product/${productId}`);
   };
 
-  // if (isLoading || !product) {
-  //   return <Loading/>;
-  // }
-
+  
   useEffect(()=>{
     fetchProductById(productId);
   },[])
@@ -67,9 +65,11 @@ const ProductDetails = () => {
       <div className='flex gap-2'>
       <button 
         onClick={()=> handleUpdate()} 
-      ><i class="fa-solid fa-pencil cursor-pointer"></i></button>
+        className='cursor-pointer'
+      ><i class="fa-solid fa-pencil"></i></button>
       <button 
-      onClick={()=> setIsModalOpen(true)}
+      onClick={()=>setIsModalOpen(true)}
+      className='cursor-pointer'
       > <i class="fa-solid fa-trash-can"></i></button>
       </div>
       </div>
@@ -128,7 +128,10 @@ const ProductDetails = () => {
       </div>
     </div>
     
-    { isModalOpen && <ConfirmationModal setIsModalOpen={setIsModalOpen} onConfirm={onConfirm} message = {"are you sure do you want to delete this product"} />}   
+    { isModalOpen && <ConfirmationModal 
+    setIsConfirmationModalOpen={setIsModalOpen} 
+    onConfirm={onConfirm} 
+    message = {"are you sure do you want to delete this product"} />}   
     </>
   );
 };

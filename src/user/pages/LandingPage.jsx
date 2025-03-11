@@ -81,14 +81,13 @@ function LandingPage() {
       {/* slider */}
       <div className='relative overflow-hidden max-h-screen '>
 
-
         <div className='flex transition-transform duration-500'
           style={{
             transform: `translateX(-${currentSlide * 100}%)`
           }}
         >
 
-          {carouselImages.map((image, index) => (
+          {carouselImages && carouselImages.map((image, index) => (
             //w-screen flex-shrink-0
             <div className="w-[100%] flex-shrink-0" key={index}> 
               <img
@@ -103,7 +102,7 @@ function LandingPage() {
 
         {/* Arrows */}
         <div>
-          {carouselImages.length > 1 && (
+          {carouselImages && carouselImages.length > 1 && (
             <>
               <button
                 className="absolute top-1/2 left-0 transform -translate-y-1/2  bg-transparent p-2 rounded-full"
@@ -123,7 +122,7 @@ function LandingPage() {
         </div>
         {/* Dots */}
         <div className="flex justify-center mt-4">
-          {carouselImages.map((_, index) => (
+          {carouselImages && carouselImages.map((_, index) => (
             <button
               key={index}
               className={`w-3 h-3 rounded-full mx-2 ${currentSlide === index ? "bg-gray-600" : "bg-gray-400"

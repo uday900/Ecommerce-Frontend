@@ -7,9 +7,12 @@ import { AppContext } from "../../context/AppContext";
 const UpdateProduct = () => {
   const { productId } = useParams(); // Get the product ID from URL params
   const navigate = useNavigate();
-  const { register, handleSubmit, setValue, reset } = useForm();
 
+  const [disableUpdate, setDisableUpdate] = useState(true);
+  const [initialData, SetInitialData] = useState(null);
 
+  const { register, handleSubmit, reset, watch } = useForm();
+  const watchedFields = watch();
 
   const { product,
     categories,
@@ -46,27 +49,6 @@ const UpdateProduct = () => {
 
 
 
-  useEffect(() => {
-
-    fetchCategories();
-    fetchProductById(productId);
-
-    setColors(product.colors)
-    setSizes(product.sizes)
-    reset({
-      name: product.name,
-      description: product.description,
-      price: product.price,
-      quantity: product.quantity,
-      categoryName: product.categoryName,
-      brand: product.brand,
-      rating: product.rating,
-
-    })
-  }, []);
-
-
-
   const onSubmit = async (data) => {
 
     try {
@@ -87,9 +69,9 @@ const UpdateProduct = () => {
       }
       // formData.append("image", data.image && data.image.length > 0 ? data.image[0] : null);
 
-      formData.forEach((key, value) => {
-        console.log(key, value)
-      })
+      // formData.forEach((key, value) => {
+      //   console.log(key, value)
+      // })
 
 
       // Update product
@@ -104,6 +86,50 @@ const UpdateProduct = () => {
     }
 
   };
+
+  useEffect(() => {
+    fetchCategories();
+    fetchProductById(productId);
+  }, []);
+
+  useEffect(() => {
+    if (product) {
+      // SetInitialData(product); // Store original product data
+      setSizes(product.sizes || []);
+      setColors(product.colors || []);
+      reset({
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        quantity: product.quantity,
+        categoryName: product.categoryName,
+        brand: product.brand,
+        rating: product.rating,
+      });
+    }
+  }, [product, reset]);
+
+  // useEffect(() => {
+
+  //   fetchCategories();
+  //   fetchProductById(productId);
+
+  //   setColors(product.colors)
+  //   setSizes(product.sizes)
+  //   reset({
+  //     name: product.name,
+  //     description: product.description,
+  //     price: product.price,
+  //     quantity: product.quantity,
+  //     categoryName: product.categoryName,
+  //     brand: product.brand,
+  //     rating: product.rating,
+
+  //   })
+  // }, []);
+
+ 
+
 
   return (
     <div className="flex justify-start">
@@ -295,7 +321,7 @@ const UpdateProduct = () => {
                 </button>
                 <button
                   type="submit"
-                  className="primary-button"
+                  className='primary-button'
                 >
                   Update Product
                 </button>

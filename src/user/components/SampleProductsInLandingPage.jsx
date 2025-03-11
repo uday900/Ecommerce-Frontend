@@ -26,7 +26,7 @@ function SampleProductsInLandingPage(props) {
             
           </div>
           <button>
-          <i class="fa-solid fa-chevron-right mx-10"></i>
+          <i className="fa-solid fa-chevron-right mx-10"></i>
           </button>
           
 

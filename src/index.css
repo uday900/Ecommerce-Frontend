@@ -2,23 +2,23 @@
 
 @layer base {
     .primary-button{
-        @apply text-sm bg-black text-white  py-2 px-4 rounded-md cursor-pointer
+        @apply text-sm bg-black text-white border border-black py-2 px-4 rounded-md cursor-pointer hover:bg-white hover:text-black
     }
 
     .disabled-button{
         @apply text-sm bg-gray-400 text-white py-2 px-4 rounded-md cursor-not-allowed
     }
     .secondary-button{
-        @apply text-sm font-semibold px-4 py-2 border border-gray-800 rounded-md hover:bg-gray-200
+        @apply text-sm font-semibold px-4 py-2 border border-gray-800 rounded-md hover:bg-gray-200 cursor-pointer
     }
 
 
     .hover-effect{
-        @apply p-2 hover:bg-gray-300 cursor-pointer active:underline
+        @apply p-2 hover:bg-gray-300 cursor-pointer hover:underline
     }
 
     .input-field{
-        @apply w-full border border-gray-300 rounded-lg p-2
+        @apply w-full border border-gray-300 rounded-lg p-2 cursor-pointer
     }
 
 

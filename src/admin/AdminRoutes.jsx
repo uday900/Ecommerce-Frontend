@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Dashboard from './pages/Dashboard'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import PageNotFound from '../common-componets/PageNotFound'
@@ -18,15 +18,24 @@ function AdminRoutes() {
   const { 
     isAuthenticated,
     isAdmin,
+    isLoggedIn,
   } = useContext(AppContext);
 
-  if(!isAuthenticated){
-    navigate('/login')
+  useEffect(() => {
+    isLoggedIn();  // Ensure authentication state updates
+  }, []);
+
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     navigate('/login');
+  //   }
+  // }, [isAuthenticated]);
+
+  if (!isAdmin) {
+    return <AuthRequired />;
   }
-  if(!isAdmin){
-    // navigate('/')
-    return <AuthRequired/>
-  }
+  
+
   return (
     <>
       <Layout>

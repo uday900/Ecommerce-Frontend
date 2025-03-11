@@ -74,6 +74,7 @@ function SingleProduct() {
   return (
     <>
       {isLoading && <Loading />}
+      {console.log(product)}
       <div className="container mx-auto py-4 px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
@@ -101,7 +102,7 @@ function SingleProduct() {
             <p className="text-2xl font-semibold mb-4">&#8377;{product.price}</p>
 
             <div className="mt-6">
-              <h2 className="text-sm font-semibold mb-2">Select Size</h2>
+              <h2 className="text-sm font-semibold mb-2">Sizes Avaliable</h2>
 
               <div className="flex space-x-2">
                 {product.sizes && product.sizes.map((size, index) => (

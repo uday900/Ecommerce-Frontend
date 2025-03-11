@@ -2,9 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { AppContext } from "../../context/AppContext";
 import Loading from "../../common-componets/Loading";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   
+  const navigate = useNavigate();
   const { register, 
     handleSubmit, 
     reset,
@@ -158,7 +160,7 @@ const AddProduct = () => {
                     className="w-full border border-gray-300 rounded-lg p-2"
                     // value={category}
                     // onChange={(e) => setCategory(e.target.value)}
-                    {...register("categoryName", { required: true })}
+                    {...register("categoryName", { required: "Category is required" })}
 
                   >
                     {categories.map((category) => (
@@ -166,6 +168,7 @@ const AddProduct = () => {
                         {category.name}
                       </option>
                     ))}
+                    { errors.categoryName && <p className="text-red-500 text-xs mt-1">{errors.image.categoryName}</p>}
 
                   </select>
                 </div>
@@ -179,6 +182,7 @@ const AddProduct = () => {
                     {...register("rating", { required: false })}
                     placeholder="Enter rating"
                   />
+                  
                 </div>
 
 
@@ -188,7 +192,7 @@ const AddProduct = () => {
 
               <div className="flex gap-4 mb-4">
                 <div className="w-1/2">
-                  <label className="block text-sm font-medium mb-2">Sizes</label>
+                  <label className="block text-sm font-medium mb-2">Sizes (Optional)</label>
 
                   <div>
                     <div className="flex gap-2 items-center mb-4">
@@ -227,7 +231,7 @@ const AddProduct = () => {
 
                 </div>
                 <div className="w-1/2">
-                  <label className="block text-sm font-medium mb-2">Colors</label>
+                  <label className="block text-sm font-medium mb-2">Colors (Optional)</label>
                   <div>
                     <div className="flex gap-2 items-center mb-4">
                       <input
@@ -281,8 +285,11 @@ const AddProduct = () => {
               <div className="flex justify-end">
                 <button
                   type="reset"
-                  className="bg-gray-500 text-white px-4 py-2 rounded-lg mr-2"
-                  onClick={() => reset()}
+                  className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded-lg mr-2 cursor-pointer"
+                  onClick={() => {
+                    reset();
+                    navigate("/admin/dashboard")
+                  }}
                 >
                   Cancel
                 </button>
