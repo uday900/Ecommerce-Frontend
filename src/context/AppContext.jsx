@@ -93,10 +93,9 @@ export const AppProvider = ({ children }) => {
 
         else{
             setIsAuthenticated(false);
-        setIsAdmin(false);
-        setIsUser(false);
-        setUser({});
-        // toast.error("Please login first");
+            setIsAdmin(false);
+            setIsUser(false);
+            setUser({});
         }
 
 
