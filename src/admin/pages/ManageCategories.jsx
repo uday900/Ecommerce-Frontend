@@ -14,19 +14,19 @@ export default function ManageCategories() {
   const [validated, setValidated] = useState(true);
 
 
-  const { categories, isLoading, 
+  const { categories, isLoading,
     fetchCategories, addCategory, updateCategory,
-     deleteCategory, fetchCategoryById,
-     message, setMessage,
-     error, setError } = useContext(AppContext);
+    deleteCategory, fetchCategoryById,
+    message, setMessage,
+    error, setError } = useContext(AppContext);
 
 
 
 
-  
+
 
   const handleAddCategory = () => {
-    
+
     addCategory({ name: newCategory });
     setNewCategory('');
   }
@@ -39,7 +39,7 @@ export default function ManageCategories() {
     setUpdatedCategoryId(null);
     setUpdatedCategoryName(null);
   }
-  
+
   function onConfirm(isConfirmed) {
     if (isConfirmed) {
       deleteCategory(currentCategoryId);
@@ -48,28 +48,28 @@ export default function ManageCategories() {
     setIsConfirmationModalOpen(false);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchCategories();
-  },[])
-  useEffect(()=>{
+  }, [])
+  useEffect(() => {
     setError('');
-  },[newCategory])
+  }, [newCategory])
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log("new category", newCategory, validated);
-    if ( newCategory!== null && newCategory.trim() !== "" 
-  
-  ) {
+    if (newCategory !== null && newCategory.trim() !== ""
+
+    ) {
       setValidated(false);
     } else {
       setValidated(true);
     }
-  },[newCategory, updatedCategoryName])
+  }, [newCategory, updatedCategoryName])
 
   return (
     <>
-    {/* Confirmation Modal */}
-    {isConfirmationModalOpen && (
+      {/* Confirmation Modal */}
+      {isConfirmationModalOpen && (
         <ConfirmationModal
           setIsConfirmationModalOpen={setIsConfirmationModalOpen}
           onConfirm={onConfirm}
@@ -82,23 +82,23 @@ export default function ManageCategories() {
 
         {/* Add Category */}
         <div className="flex flex-col gap-4 mb-6">
-      
-          <form action="" onSubmit={(e) => {e.preventDefault(); handleAddCategory()}}>
-          <input
-            type="text"
-            className="border border-gray-300 rounded px-4 py-2 w-full"
-            placeholder="Add new category"
-            value={newCategory}
-            onChange={(e) => setNewCategory(e.target.value)}
+
+          <form action="" onSubmit={(e) => { e.preventDefault(); handleAddCategory() }}>
+            <input
+              type="text"
+              className="border border-gray-300 rounded px-4 py-2 w-full"
+              placeholder="Add new category"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
             // required = {true}
 
-          />
-          {/* change button dispaly when disabled to lower color */}
+            />
+            {/* change button dispaly when disabled to lower color */}
             <button
               className={`mt-2 ${validated ? 'disabled-button' : ' primary-button  '}`}
-              type='submit' 
+              type='submit'
               disabled={validated}
-              >
+            >
               Add
             </button>
           </form>
@@ -121,16 +121,24 @@ export default function ManageCategories() {
                     onChange={(e) => setUpdatedCategoryName(e.target.value)}
                   />
                   <div className="flex gap-2">
-                    <button
-                      onClick={()=>handleUpdateCategory(category.id, updatedCategoryName)}
+                    {/* <button
+                      onClick={() => handleUpdateCategory(category.id, updatedCategoryName)}
                       // className=""
                       className={` ' bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 '}`}
                     >
                       Save
+                    </button> */}
+                    <button
+                      onClick={() => handleUpdateCategory(category.id, updatedCategoryName)}
+                      className={`${updatedCategoryName === category.name || !updatedCategoryName.trim() ? 'disabled-button' : 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600'} `}
+                      disabled={updatedCategoryName === category.name || !updatedCategoryName.trim()} // Disable if unchanged or empty
+                    >
+                      Save
                     </button>
+
                     <button
                       onClick={() => {
-                      
+
                         setUpdatedCategoryId(null);
                       }}
                       className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
@@ -151,16 +159,16 @@ export default function ManageCategories() {
                         setUpdatedCategoryId(category.id);
                         setUpdatedCategoryName(category.name);
                       }}
-                      >
+                    >
                       <i className="fa-solid fa-pencil"></i>
                     </button>
                     <button
-                    onClick={() => {
-                      setIsConfirmationModalOpen(true);
-                      setCurrentCategoryId(category.id);
-                      // setNewCategory(category.name);
-                    }}
-                    className="cursor-pointer hover:text-red-500"
+                      onClick={() => {
+                        setIsConfirmationModalOpen(true);
+                        setCurrentCategoryId(category.id);
+                        // setNewCategory(category.name);
+                      }}
+                      className="cursor-pointer hover:text-red-500"
                     >
                       <i className="fa-solid fa-trash-can"></i>
                     </button>

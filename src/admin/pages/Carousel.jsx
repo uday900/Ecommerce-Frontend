@@ -20,6 +20,7 @@ function Carousel() {
     const formData = new FormData();
     formData.append('image', image);
     addCarouselImage(formData);
+    setNewImage(null);
   }
 
 
@@ -43,13 +44,15 @@ function Carousel() {
         <input
           type="file"
           placeholder="Enter image URL"
-          // value={newImage}
+    
           onChange={(e) => setNewImage(e.target.files[0])}
           className="input-field w-2/3"
         required/>
+        
         <button
           onClick={()=> handleImageAdd(newImage)}
-          className="primary-button"
+          className={`${newImage == null ? "disabled-button" : "primary-button"}`}
+          disabled={newImage == null}
         >
           Add Image
         </button>

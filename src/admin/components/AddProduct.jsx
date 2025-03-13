@@ -10,6 +10,7 @@ const AddProduct = () => {
   const { register, 
     handleSubmit, 
     reset,
+    watch,
     formState: { errors },
 
    } = useForm();
@@ -20,7 +21,7 @@ const AddProduct = () => {
   const [color, setColor] = useState(""); // To store the current size input
   const [colors, setColors] = useState([]); // To store the list of sizes
 
-  
+  const watchedFields = watch();
   // Handler for adding size
   const handleAddSize = () => {
     if (size.trim() === "") return; // Prevent adding empty sizes
@@ -93,6 +94,7 @@ const AddProduct = () => {
   }, []); 
 
  
+  // console.log(watchedFields);
   return (
     <div className="flex justify-start">
       { isLoading && <Loading/>}
@@ -173,7 +175,7 @@ const AddProduct = () => {
                   </select>
                 </div>
                 <div className="w-1/2">
-                  <label className="block text-sm font-medium mb-2">Rating</label>
+                  <label className="block text-sm font-medium mb-2">Rating (Optional)</label>
                   <input
                     type="number"
                     step="0.1"
@@ -295,7 +297,20 @@ const AddProduct = () => {
                 </button>
                 <button
                   type="submit"
-                  className="primary-button"
+                  className={`${
+                    watchedFields.name === "" || 
+                    watchedFields.description === "" || 
+                    watchedFields.price === "" || 
+                    watchedFields.categoryName === "" ||
+                    !watchedFields.image || watchedFields.image.length === 0 ||
+                    watchedFields.brand === "" ? "disabled-button" : 'primary-button'}`}
+                  disabled={watchedFields.name === "" || 
+                  watchedFields.description === "" || 
+                  watchedFields.price === "" || 
+                  watchedFields.categoryName === "" ||
+                  !watchedFields.image || watchedFields.image.length === 0 ||
+                  watchedFields.brand === ""}
+
                 >
                   Add Product
                 </button>
@@ -309,3 +324,6 @@ const AddProduct = () => {
 };
 
 export default AddProduct;
+
+
+

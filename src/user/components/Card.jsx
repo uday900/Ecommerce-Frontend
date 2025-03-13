@@ -4,13 +4,8 @@ import { newImageUrl } from "../../context/AppContext";
 
 function Card({ product, categoryName }) {
 
+  const imageSrc = product.imageData ? `${newImageUrl}${product.imageData.trim()}` : "/placeholder.jpg"; // Add a default image if null
 
-  // const [isFavorite, setIsFavorite] = useState(false);
-
-  // const toggleFavorite = () => {
-  //   setIsFavorite(!isFavorite);
-  //   console.log("first")
-  // };
 
   return (
     <div className="w-full h-auto flex flex-col bg-white  rounded-lg relative">
@@ -18,21 +13,13 @@ function Card({ product, categoryName }) {
       <Link to={`/user/shop/${categoryName}/${product.id}`}>
         {product.imageData && <img
           src={newImageUrl + product.imageData}
+          // src = {imageSrc}
           alt={product.imageName}
           className="w-full h-auto object-cover rounded-md mb-2"
         />
         }
 
-        {/* <button
-          onClick={() => toggleFavorite()}
-          className={`text-sm absolute top-5 right-5 bg-white px-2 py-1 rounded-full 
-          ${isFavorite ? 'text-red-500' : 'text-gray-400'} focus:outline-none`}
-          aria-label="Add to favorites"
-
-        >
-          <i className={`fa-${isFavorite ? 'solid' : 'regular'} fa-heart`}></i>
-        </button> */}
-
+       
         <div className="flex ">
           <div >
             {/* <Link to={`/user/shop/${categoryName}/${product.id}`}> */}

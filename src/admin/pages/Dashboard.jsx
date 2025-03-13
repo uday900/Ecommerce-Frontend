@@ -21,7 +21,7 @@ function Dashboard() {
       // fetch all
       console.log("fetching All products")
       fetchProducts();
-      
+
     } else {
       // fetch by category;
       console.log(e.target.value);
@@ -56,7 +56,7 @@ function Dashboard() {
           </div>
 
           {/* Buttons Section */}
-          <div className="flex gap-4 mb-6">
+          <div className="flex gap-4 mb-6 flex-wrap">
             <button
               onClick={() => navigate('/admin/manage-categories')}
               className="primary-button "
@@ -74,9 +74,9 @@ function Dashboard() {
 
 
             <select name="category" id="category" className="input-field w-auto"
-            value={selectedCategory}
-            onChange={(e) => handleOnChangeFilter(e)}
-            
+              value={selectedCategory}
+              onChange={(e) => handleOnChangeFilter(e)}
+
             >
               <option value="All">All</option>
               {categories.map((category, index) => (
@@ -92,7 +92,7 @@ function Dashboard() {
 
           {products.length === 0 ? <div> No Products are available </div> : (
             <div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                 {products.map((product) => (
                   <Card key={product.id} product={product} />
                 ))}

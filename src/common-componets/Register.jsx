@@ -6,7 +6,7 @@ import Loading from './Loading';
 import axios from 'axios';
 
 const Register = () => {
-  
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -16,31 +16,45 @@ const Register = () => {
 
   const { isLoading, setIsLoading } = useContext(AppContext);
 
+ 
+  const validationRules = [
+    { text: "At least 8 characters", isValid: formData.password.length >= 8 },
+    { text: "At least one uppercase letter (A-Z)", isValid: /[A-Z]/.test(formData.password) },
+    { text: "At least one lowercase letter (a-z)", isValid: /[a-z]/.test(formData.password) },
+    { text: "At least one number (0-9)", isValid: /[0-9]/.test(formData.password) },
+    { text: "At least one special character (!@#$%^&*)", isValid: /[!@#$%^&*(),.?":{}|<>]/.test(formData.password) },
+  ];
+
+  const isFormInvalid =
+    formData.name === "" ||
+    formData.email === "" ||
+    formData.password === "" ||
+    validationRules.some(rule => !rule.isValid)
   // Handle input changes
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+ 
   };
 
   // Handle form submission
-   const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
-    // console.log('Form submitted:', formData);
-console.log(isLoading)
+    console.log(isLoading)
     setIsLoading(true);
     try {
-      
+
       const response = await axios.post(`${BASE_URL}/auth/register`, formData);
-      if ( response != null && response.data.status == 200) {
-          // setMessage(response.data.message);
-          toast.success(response.data.message);
-          navigate('/login');
+      if (response != null && response.data.status == 200) {
+        // setMessage(response.data.message);
+        toast.success(response.data.message);
+        navigate('/login');
       } else {
-          // setError(response.data.message);
-          toast.error(response.data.message)
-      }      
+        // setError(response.data.message);
+        toast.error(response.data.message)
+      }
     } catch (error) {
       // console.log('Error submitting form:', error);
       toast.error('Error submitting form');
@@ -50,7 +64,7 @@ console.log(isLoading)
     // Add API call here to send data to backend
   };
 
-  if (isLoading){
+  if (isLoading) {
     return <Loading />
   }
   return (
@@ -100,12 +114,33 @@ console.log(isLoading)
               required
             />
           </div>
+          <div className='mb-2 ml-4'>
+            {/* <ul className="list-disc">
+            { passwordInstructions.map((inst) =>{
+              return <li  className={`list-disc ${inst.valid && 'marker:text-green-500'}`}>{inst.message}</li>
+            })} */}
+            {/* </ul> */}
+            {/* Password Criteria List */}
+      <ul className="list-disc pl-5 space-y-1">
+        {validationRules.map((rule, index) => (
+          <li key={index} className={`${rule.isValid ? "marker:text-green-500" : "marker:text-red-500"}`}>
+            {rule.text}
+          </li>
+        ))}
+      </ul>
+           
+            
+          </div>
+        
           <button
-            type="submit"
-            className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800"
-          >
-            Register
-          </button>
+  type="submit"
+  className={` w-full ${
+    isFormInvalid ? 'disabled-button' : 'primary-button'
+  }`}
+  disabled={isFormInvalid}
+>
+  Register
+</button>
         </form>
         <div className="mt-4 text-center">
           <p className="text-sm">

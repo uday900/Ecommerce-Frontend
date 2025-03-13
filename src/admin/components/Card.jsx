@@ -17,7 +17,9 @@ function Card({product}) {
             {/* { console.log(product.imageUrl)} */}
 
 
-            <img src={newImageUrl} alt="" />
+            <img src={newImageUrl} 
+            alt={product.imageName}
+          className="w-full h-auto object-cover rounded-md mb-2" />
             <h3 className="text-lg font-semibold mt-4 cursor-pointer">{product.name}</h3>
             <p className="text-gray-700 mt-2">Price: ${product.price}</p>
             <button

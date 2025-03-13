@@ -162,7 +162,7 @@ function Orders() {
       {isLoading && <Loading />}
       <h2 className="text-2xl font-bold mb-4 text-center">Orders List</h2>
       
-      <div className="flex gap-4 mb-4">
+      <div className="flex gap-4 mb-4 flex-wrap">
         <input
           type="text"
           placeholder="Search by Order ID or Product Name"

@@ -35,13 +35,7 @@ function LandingPage() {
     setCurrentSlide(index);
   };
 
-  const loadProducts = (category) => {
-    fetchProductsByCategory(category);
-  }
-  // useEffect(() => {
-  //   fetchCategories();
-  //   fetchCarouselImages();
-  // }, [])
+ 
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -62,16 +56,14 @@ function LandingPage() {
 
       setListOfCategoryProducts(response);
     }
-    loadProducts();
+    // loadProducts();
     if (categories.length > 0) {
       loadProducts();
     }
 
   }, [categories])
 
-  if (failedToFetch){
-    return <h1 className='mt-4 text-center text-red-500'>Failed to fetch data or backend is not started</h1>
-  }
+ 
   return (
     <div >
       {isLoading && <Loading />}
@@ -135,7 +127,7 @@ function LandingPage() {
       </div>
 
 
-      {listOfCategoryProducts.map(({ title, products }) => {
+      {listOfCategoryProducts && listOfCategoryProducts.map(({ title, products }) => {
         // const products = loadProducts(category.name);
         return (
           <SampleProductsInLandingPage

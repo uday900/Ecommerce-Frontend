@@ -104,7 +104,7 @@ function Cart() {
                     </div>
                     <div className="inline-block space-x-4 mt-6">
                       <button
-                        className="bg-red-500 text-white text-sm py-2 px-4 rounded-lg shadow-md hover:bg-red-600"
+                        className="delete-button"
                         onClick={() => handleRemoveFromCart(user.id, cartItem.id)}
                       >
                         Remove
@@ -147,8 +147,10 @@ function Cart() {
           <p className="text-lg">
             Grand Total: <span className="font-bold">₹{cart.totalAmount}</span>
           </p>
-          <button className="mt-5 secondary-button"
-          onClick={()=> handleCheckOut()}>
+          <button className={`mt-5 ${cart.cartItems.length === 0 ? 'disabled-button' : 'primary-button'} `}
+          onClick={()=> handleCheckOut()}
+          disabled={cart.cartItems.length === 0}
+          >
             Checkout
           </button>
         </div>

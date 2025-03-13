@@ -117,9 +117,11 @@ export const AppProvider = ({ children }) => {
             }
         } catch (error) {
             toast.error("Error fetching categories");
+            // setFailedToFetch(true);
             console.log("Error fetching categories:", error);
+            
         } finally {
-            console.log("set false")
+            // console.log("set false")
             setIsLoading(false);  // Stop loading after response or error
         }
     }
