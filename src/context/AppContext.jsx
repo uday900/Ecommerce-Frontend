@@ -62,6 +62,7 @@ export const AppProvider = ({ children }) => {
             setIsLoading(true);
             try {
                 const response = await api.post(`/auth/verify-account?token=${token}`)
+                // console.log(response, "in logged in")
                 if (response != null && response.status == 200) {
                     setIsAuthenticated(true);
                     setIsAdmin(user.role === "ADMIN");
@@ -82,6 +83,9 @@ export const AppProvider = ({ children }) => {
                 toast.error("Error checking login status");
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
+
+                // setFailedToFetch(true);
+
                 
                 console.log("Error checking login status:", error);
                 setIsLoading(false);
@@ -117,7 +121,7 @@ export const AppProvider = ({ children }) => {
             }
         } catch (error) {
             toast.error("Error fetching categories");
-            // setFailedToFetch(true);
+            setFailedToFetch(true);
             console.log("Error fetching categories:", error);
             
         } finally {
@@ -745,7 +749,7 @@ export const AppProvider = ({ children }) => {
         setIsAuthenticated, setIsLoading, setIsUser, setIsAdmin,
         info, setInfo,
 
-        failedToFetch,
+        failedToFetch, setFailedToFetch,
         categories, setCategories,
         fetchCategories, addCategory, updateCategory, deleteCategory, fetchCategoryById,
 

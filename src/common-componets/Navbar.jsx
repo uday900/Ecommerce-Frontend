@@ -63,15 +63,6 @@ const Navbar = () => {
         <div className="text-2xl font-bold text-black mx-4">
           <Link to="/">Shop<span className="text-blue-500">Ease</span></Link>
         </div>
-
-        {/* Navigation Links (Hidden on mobile) */}
-        {/* <div className="hidden md:flex space-x-6 text-gray-600 font-medium">
-        {categories.slice(0, 3).map((category) => (
-          <Link key={category.id} to={`/user/shop/${category.name}`} className="hover:text-black">
-            {category.name.split(" ")[0]}{category.name.split(" ").length > 1 && ".."}
-          </Link>
-        ))}
-      </div> */}
         <div className="hidden lg:flex space-x-6 text-gray-600 font-medium">
           {categories.slice(0, 3).map((category) => (
             <div key={category.id} className="relative group">
@@ -79,7 +70,9 @@ const Navbar = () => {
                 {category.name.split(" ")[0]}{category.name.split(" ").length > 1 && ".."}
               </Link>
               <span className="w-auto absolute left-1/2 -translate-x-1/2 top-6 bg-blue-500 text-white text-sm px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-nowrap">
+              <Link to={`/user/shop/${category.name}`}>
                 {category.name}
+              </Link>
               </span>
             </div>
           ))}
@@ -89,8 +82,6 @@ const Navbar = () => {
 
       {/* Search Bar */}
       <div className="relative">
-
-
         {/* //     Search, Cart */}
         <div className="hidden md:flex items-center space-x-6 w-full ">
           <div className="relative">

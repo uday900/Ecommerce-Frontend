@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AppContext, newImageUrl } from '../../context/AppContext'
 import Loading from '../../common-componets/Loading';
 import SampleProductsInLandingPage from '../components/SampleProductsInLandingPage';
+import ErrorPage from '../../common-componets/Errorpage';
 
 function LandingPage() {
 
@@ -14,8 +15,9 @@ function LandingPage() {
     isLoading,
     message,
     error,
-    failedToFetch,
+    failedToFetch, setFailedToFetch,
     setMessage,
+
 
   } = useContext(AppContext)
 
@@ -44,6 +46,13 @@ function LandingPage() {
     return () => clearInterval(interval);
   }, [carouselImages.length])
 
+  // useEffect(()=>{
+  //   if(failedToFetch){
+      
+  //     return <ErrorPage/>
+  //   }
+  // },[failedToFetch, setFailedToFetch])
+
   useEffect(() => {
     async function loadProducts() {
 
@@ -64,6 +73,9 @@ function LandingPage() {
   }, [categories])
 
  
+  if (failedToFetch) {
+    return <ErrorPage/>
+  }
   return (
     <div >
       {isLoading && <Loading />}

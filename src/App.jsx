@@ -14,6 +14,7 @@ import Register from "./common-componets/Register"
 import SearchProducts from "./common-componets/SearchProducts"
 import ForgotPassword from "./common-componets/ForgotPassword"
 import ResetPassword from "./common-componets/ResetPassword"
+import ErrorPage from "./common-componets/Errorpage"
 
 function App() {
 
@@ -23,6 +24,8 @@ function App() {
     isLoggedIn,
     fetchCategories,
     fetchCarouselImages,
+    failedToFetch,
+    setFailedToFetch,
 
   } = useContext(AppContext)
   
@@ -32,6 +35,8 @@ function App() {
     fetchCarouselImages();
 
   },[])
+
+ 
   return (
    <>
    {/* { isLoading && <Loading/>} */}
