@@ -108,7 +108,7 @@ const ProductDetails = () => {
             <li>
               <strong>Available Sizes: </strong>
               {product.sizes ? product.sizes.map((size, index) => (
-                <span key={index} className="bg-gray-200 text-gray-800 px-2 py-1 rounded mr-1">
+                <span key={index} className="bg-gray-200 hover:bg-gray-400 text-gray-800 px-2 py-1 rounded mr-1 cursor-pointer">
                   {size}
                 </span>
               )) : "No sizes available"}
@@ -117,7 +117,7 @@ const ProductDetails = () => {
               <strong>Colors: </strong>
               { console.log(product.colors)}
               {product.colors ? product.colors.map((color, index) => (
-                <span key={index} className="bg-gray-200 text-gray-800 px-2 py-1 rounded mr-1">
+                <span key={index} className="bg-gray-200 hover:bg-gray-400 text-gray-800 px-2 py-1 rounded mr-1 cursor-pointer">
                   {color}
                 </span>
               ))

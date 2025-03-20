@@ -112,7 +112,7 @@ export const AppProvider = ({ children }) => {
         console.log("Fetching categories...");
         try {
             const response = await api.get(`/category/fetch`);
-            console.log(response)
+            // console.log(response)
             if (response.data.status == 200) {
                 setCategories(response.data.categories);
             } else {

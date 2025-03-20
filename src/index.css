@@ -28,6 +28,13 @@
     .delete-button{
         @apply bg-red-500 text-white text-sm py-2 px-4 rounded-lg shadow-md hover:bg-red-600 cursor-pointer
     }
+    .cancel-button{
+        @apply bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded-lg mr-2 cursor-pointer
+    }
+
+    .selection-field{
+        @apply border border-slate-300 outline-sky-500 p-2 rounded  cursor-pointer
+    }
 
     
 }

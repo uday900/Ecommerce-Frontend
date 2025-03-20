@@ -143,7 +143,7 @@ const Navbar = () => {
         )}
         {!isAdmin && isAuthenticated && (
           <Link to={`/user/cart`}>
-            <button className="relative text-gray-600 hover:text-black">
+            <button className="relative text-gray-600 hover:text-black cursor-pointer">
               <i className="fas fa-shopping-cart text-lg"></i>
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-1">
                 {cartCount}

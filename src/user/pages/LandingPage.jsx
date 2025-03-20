@@ -3,6 +3,7 @@ import { AppContext, newImageUrl } from '../../context/AppContext'
 import Loading from '../../common-componets/Loading';
 import SampleProductsInLandingPage from '../components/SampleProductsInLandingPage';
 import ErrorPage from '../../common-componets/Errorpage';
+import { Link } from 'react-router-dom';
 
 function LandingPage() {
 
@@ -93,12 +94,20 @@ function LandingPage() {
 
           {carouselImages && carouselImages.map((image, index) => (
             //w-screen flex-shrink-0
-            <div className="w-[100%] flex-shrink-0" key={index}> 
+            <div className="w-[100%] flex-shrink-0" key={index}>
+              { categories.length > 0 ? <Link to ={`/user/shop/${categories[0].name}`}> 
               <img
                 src={newImageUrl + image.imageData}
                 alt={`Slide ${index + 1}`}
                 className="w-[100%] h-auto object-cover"
               />
+              </Link> 
+              :  <img
+              src={newImageUrl + image.imageData}
+              alt={`Slide ${index + 1}`}
+              className="w-[100%] h-auto object-cover"
+            /> }
+              
             </div>
           ))}
 

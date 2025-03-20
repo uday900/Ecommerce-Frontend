@@ -87,7 +87,7 @@ const AddProduct = () => {
   useEffect(() => {
     reset(
       {
-        rating: 0,
+        rating: 1,
       }
     );
 
@@ -128,6 +128,42 @@ const AddProduct = () => {
                 { errors.description && <p className="text-red-500 text-xs mt-1">{errors.description.message}</p>}
               </div>
 
+              
+              <div className="flex gap-4 mb-4">
+                <div className="w-full">
+                  <label className="block text-sm font-medium mb-2">Category</label>
+                  <select
+                    className="selection-field"
+                    // value={category}
+                    // onChange={(e) => setCategory(e.target.value)}
+                    {...register("categoryName", { required: "Category is required" })}
+
+                  >
+                    {categories.map((category) => (
+                      <option key={category.id} value={category.name}>
+                        {category.name}
+                      </option>
+                    ))}
+                    { errors.categoryName && <p className="text-red-500 text-xs mt-1">{errors.image.categoryName}</p>}
+
+                  </select>
+                </div>
+                {/* <div className="w-1/2">
+                  <label className="block text-sm font-medium mb-2">Rating (Optional)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    max="5"
+                    className="w-full border border-gray-300 rounded-lg p-2"
+                    {...register("rating", { required: false })}
+                    placeholder="Enter rating"
+                  />
+                  
+                </div> */}
+
+
+              </div>
+
               <div className="flex gap-4 mb-4">
 
                 <div className="mb-4 w-1/2">
@@ -153,42 +189,6 @@ const AddProduct = () => {
 
               </div>
 
-
-
-              <div className="flex gap-4 mb-4">
-                <div className="w-1/2">
-                  <label className="block text-sm font-medium mb-2">Category</label>
-                  <select
-                    className="w-full border border-gray-300 rounded-lg p-2"
-                    // value={category}
-                    // onChange={(e) => setCategory(e.target.value)}
-                    {...register("categoryName", { required: "Category is required" })}
-
-                  >
-                    {categories.map((category) => (
-                      <option key={category.id} value={category.name}>
-                        {category.name}
-                      </option>
-                    ))}
-                    { errors.categoryName && <p className="text-red-500 text-xs mt-1">{errors.image.categoryName}</p>}
-
-                  </select>
-                </div>
-                <div className="w-1/2">
-                  <label className="block text-sm font-medium mb-2">Rating (Optional)</label>
-                  <input
-                    type="number"
-                    step="0.1"
-                    max="5"
-                    className="w-full border border-gray-300 rounded-lg p-2"
-                    {...register("rating", { required: false })}
-                    placeholder="Enter rating"
-                  />
-                  
-                </div>
-
-
-              </div>
 
 
 
@@ -287,7 +287,7 @@ const AddProduct = () => {
               <div className="flex justify-end">
                 <button
                   type="reset"
-                  className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded-lg mr-2 cursor-pointer"
+                  className="cancel-button"
                   onClick={() => {
                     reset();
                     navigate("/admin/dashboard")

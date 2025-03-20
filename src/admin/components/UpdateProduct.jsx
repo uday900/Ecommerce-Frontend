@@ -35,6 +35,7 @@ const UpdateProduct = () => {
     setSize(""); // Clear the input field
   };
   const handleAddColor = () => {
+    console.log("color", color)
     if (color.trim() === "") return; // Prevent adding empty sizes
     setColors([...colors, color]); // Add the size to the array
     setColor(""); // Clear the input field
@@ -158,6 +159,36 @@ const UpdateProduct = () => {
                   placeholder="Enter product description"
                 ></textarea>
               </div>
+              
+              <div className="flex gap-4 mb-4">
+                <div className="w-1/2">
+                  <label className="block text-sm font-medium mb-2">Category</label>
+                  <select
+                    className="w-full border border-gray-300 rounded-lg p-2"
+                    {...register("categoryName", { required: true })}
+                  >
+                    {categories.map((category) => (
+                      <option key={category.id} value={category.name}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+{/* 
+                <div className="w-1/2">
+                  <label className="block text-sm font-medium mb-2">Rating</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    max="5"
+                    className="w-full border border-gray-300 rounded-lg p-2"
+                    {...register("rating", { required: true })}
+                    placeholder="Enter rating"
+                  />
+                </div> */}
+              </div>
+
+
 
               <div className="flex gap-4 mb-4">
                 <div className="mb-4 w-1/2">
@@ -182,35 +213,6 @@ const UpdateProduct = () => {
 
 
 
-              <div className="flex gap-4 mb-4">
-                <div className="w-1/2">
-                  <label className="block text-sm font-medium mb-2">Category</label>
-                  <select
-                    className="w-full border border-gray-300 rounded-lg p-2"
-                    {...register("categoryName", { required: true })}
-                  >
-                    {categories.map((category) => (
-                      <option key={category.id} value={category.name}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="w-1/2">
-                  <label className="block text-sm font-medium mb-2">Rating</label>
-                  <input
-                    type="number"
-                    step="0.1"
-                    max="5"
-                    className="w-full border border-gray-300 rounded-lg p-2"
-                    {...register("rating", { required: true })}
-                    placeholder="Enter rating"
-                  />
-                </div>
-              </div>
-
-
 
               <div className="flex gap-4 mb-4">
                 <div className="w-1/2">
@@ -224,11 +226,13 @@ const UpdateProduct = () => {
                         onChange={(e) => setSize(e.target.value)}
                         placeholder="Enter size"
                         className="w-full border border-gray-300 rounded-lg p-2"
+                        
                       />
                       <button
                         type="button"
                         onClick={() => handleAddSize()}
-                        className="secondary-button"
+                        className={`${!size ? 'disabled-button' : 'primary-button'}`}
+                        disabled={!size}
                       >
                         Add
                       </button>
@@ -264,11 +268,13 @@ const UpdateProduct = () => {
                         onChange={(e) => setColor(e.target.value)}
                         placeholder="Enter color"
                         className="w-full border border-gray-300 rounded-lg p-2"
+                        
                       />
                       <button
                         type="button"
-                        onClick={handleAddColor}
-                        className="secondary-button"
+                        onClick={() =>handleAddColor()}
+                        className={`${!color ? 'disabled-button' : 'primary-button'}`}
+                        disabled={!color}
                       >
                         Add
                       </button>
@@ -314,7 +320,7 @@ const UpdateProduct = () => {
               <div className="flex justify-end">
                 <button
                   type="reset"
-                  className="bg-gray-500 text-white px-4 py-2 rounded-lg mr-2"
+                  className="cancel-button"
                   onClick={() => navigate('/admin/dashboard')}
                 >
                   Cancel

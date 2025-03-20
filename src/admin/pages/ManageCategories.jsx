@@ -121,16 +121,10 @@ export default function ManageCategories() {
                     onChange={(e) => setUpdatedCategoryName(e.target.value)}
                   />
                   <div className="flex gap-2">
-                    {/* <button
-                      onClick={() => handleUpdateCategory(category.id, updatedCategoryName)}
-                      // className=""
-                      className={` ' bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 '}`}
-                    >
-                      Save
-                    </button> */}
+                    
                     <button
                       onClick={() => handleUpdateCategory(category.id, updatedCategoryName)}
-                      className={`${updatedCategoryName === category.name || !updatedCategoryName.trim() ? 'disabled-button' : 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600'} `}
+                      className={`${updatedCategoryName === category.name || !updatedCategoryName.trim() ? 'disabled-button' : 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 cursor-pointer'} `}
                       disabled={updatedCategoryName === category.name || !updatedCategoryName.trim()} // Disable if unchanged or empty
                     >
                       Save
@@ -141,7 +135,7 @@ export default function ManageCategories() {
 
                         setUpdatedCategoryId(null);
                       }}
-                      className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                      className="cancel-button"
                     >
                       Cancel
                     </button>

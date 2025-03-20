@@ -49,7 +49,7 @@ function Dashboard() {
 
         {isLoading && <Loading />}
 
-        <div className="p-6">
+        <div className="p-6 h-auto">
 
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-purple-500">Welcome Back</h2>
@@ -73,7 +73,7 @@ function Dashboard() {
 
 
 
-            <select name="category" id="category" className="input-field w-auto"
+            <select name="category" id="category" className="selection-field w-auto"
               value={selectedCategory}
               onChange={(e) => handleOnChangeFilter(e)}
 

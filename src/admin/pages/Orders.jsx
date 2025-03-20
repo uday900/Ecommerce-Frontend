@@ -161,7 +161,7 @@ function Orders() {
     <div className="max-w-6xl mx-auto p-6">
       {isLoading && <Loading />}
       <h2 className="text-2xl font-bold mb-4 text-center">Orders List</h2>
-      
+      {/* filter and search */}
       <div className="flex gap-4 mb-4 flex-wrap">
         <input
           type="text"
@@ -171,7 +171,7 @@ function Orders() {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
         <select
-          className="border p-2 rounded"
+          className="selection-field"
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value)}
         >
@@ -179,7 +179,7 @@ function Orders() {
           <option value="date">Date</option>
         </select>
         <select
-          className="border p-2 rounded"
+          className="selection-field"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
         >
@@ -216,7 +216,7 @@ function Orders() {
                   <td className="py-2 px-4">{new Date(order.orderDate).toLocaleString()}</td>
                   <td className="py-2 px-4">
                     <select
-                      className="border border-gray-300 p-1 rounded focus:ring-2 focus:ring-blue-500"
+                      className="selection-field"
                       value={order.status}
                       onChange={(e) => updateOrderStatus(order.id, e.target.value)}
                     >

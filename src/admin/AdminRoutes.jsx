@@ -19,10 +19,14 @@ function AdminRoutes() {
     isAuthenticated,
     isAdmin,
     isLoggedIn,
+    user,
   } = useContext(AppContext);
 
   useEffect(() => {
     isLoggedIn();  // Ensure authentication state updates
+    if (!user) {
+      navigate('/login');
+    }
   }, []);
 
   // useEffect(() => {
@@ -31,6 +35,7 @@ function AdminRoutes() {
   //   }
   // }, [isAuthenticated]);
 
+  
   if (!isAdmin) {
     return <AuthRequired />;
   }

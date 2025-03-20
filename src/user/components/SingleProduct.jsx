@@ -239,6 +239,7 @@ function SingleProduct() {
 
             <p className="text-2xl font-semibold mb-4">&#8377;{product.price}</p>
 
+            { product.sizes && 
             <div className="mt-6">
               <h2 className="text-sm font-semibold mb-2">Sizes Avaliable</h2>
 
@@ -246,7 +247,7 @@ function SingleProduct() {
                 {product.sizes && product.sizes.map((size, index) => (
                   <button
                     key={index}
-                    className="border border-gray-200 rounded-md px-3 py-1 hover:bg-slate-200"
+                    className="border border-gray-200 rounded-md px-3 py-1 hover:bg-slate-200 cursor-pointer"
                   >
                     {size}
                   </button>
@@ -256,13 +257,15 @@ function SingleProduct() {
               </div>
             </div>
 
+              }
+            { product.colors && 
             <div className="mt-5">
               <h2 className="text-sm font-semibold mb-2">Colour Available</h2>
               <div className="flex space-x-2 mb-4 ">
-                {product.colors && product.colors.map((color, index) => (
+                {product.colors.map((color, index) => (
                   <span
                     key={index}
-                    className="inline-block border border-slate-200 p-2 w-5 h-5 rounded-full"
+                    className="inline-block border border-slate-200 p-2 w-5 h-5 rounded-full cursor-pointer"
                     style={{ backgroundColor: color.toLowerCase() }}
                     title={color}
                   ></span>
@@ -270,6 +273,7 @@ function SingleProduct() {
                 {/* { product.colors} */}
               </div>
             </div>
+}
 
             {!isAdmin && <>
               <button

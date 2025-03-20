@@ -15,6 +15,7 @@ import SearchProducts from "./common-componets/SearchProducts"
 import ForgotPassword from "./common-componets/ForgotPassword"
 import ResetPassword from "./common-componets/ResetPassword"
 import ErrorPage from "./common-componets/Errorpage"
+import Footer from "./common-componets/Footer"
 
 function App() {
 
@@ -68,6 +69,7 @@ function App() {
 
    <Toaster position="top-right"/>
 
+   <Footer/>
    </>
   )
 }
