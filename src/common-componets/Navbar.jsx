@@ -57,7 +57,7 @@ const Navbar = () => {
   if (isFailedToFetch) return <ErrorPage />;
 
   return (
-    <nav className="flex items-center justify-between px-6 py-4 bg-white border border-gray-200 sticky top-0 z-20 w-full">
+    <nav className="flex items-center justify-between px-6 py-4 bg-white border border-gray-200 sticky top-0 z-50 w-full">
       <div className="flex items-center ">
         {/* Logo */}
         <div className="text-2xl font-bold text-black mx-4">

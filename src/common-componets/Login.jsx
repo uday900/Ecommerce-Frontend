@@ -178,11 +178,13 @@ const Login = () => {
     setUser,
     setIsAdmin, 
     setIsUser,
+    setFailedToFetch
   } = useContext(AppContext); 
 
   async function handleLogin(e) {
     e.preventDefault();
     setIsLoading(true);
+    setFailedToFetch(false);
 
     try {
       const response = await api.post(`/auth/login`, { email, password });

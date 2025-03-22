@@ -109,7 +109,7 @@ function CategorySection() {
                 {/* Filter Sidebar - Hidden on mobile unless toggled */}
                 <div
                     className={`w-full md:w-1/4 p-4 border border-solid border-gray-200 mx-2 md:mx-10 my-4
-                    bg-white fixed md:static top-0 left-0 h-full z-50 transition-transform duration-300 
+                    bg-white fixed md:static top-0 left-0 h-full z-20 transition-transform duration-300 
                     ${isFilterVisible ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}
                 >
                     <div className="flex justify-between items-center">

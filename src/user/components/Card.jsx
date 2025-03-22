@@ -6,13 +6,15 @@ function Card({ product, categoryName }) {
 
   const imageSrc = product.imageData ? `${newImageUrl}${product.imageData.trim()}` : "/placeholder.jpg"; // Add a default image if null
 
+  const newImageUrlSameAsAdminCard = product.imageData ? `data:image/jpeg;base64,${product.imageData}` : null;
 
   return (
     <div className="w-full h-auto flex flex-col bg-white  rounded-lg relative">
 
       <Link to={`/user/shop/${categoryName}/${product.id}`}>
         {product.imageData && <img
-          src={newImageUrl + product.imageData}
+          src={newImageUrlSameAsAdminCard}
+          // src={newImageUrl + product.imageData}
           // src = {imageSrc}
           alt={product.imageName}
           className="w-full h-auto object-cover rounded-md mb-2"

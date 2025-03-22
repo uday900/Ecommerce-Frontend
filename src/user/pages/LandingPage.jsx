@@ -118,13 +118,13 @@ function LandingPage() {
           {carouselImages && carouselImages.length > 1 && (
             <>
               <button
-                className="absolute top-1/2 left-0 transform -translate-y-1/2  bg-transparent p-2 rounded-full"
+                className="absolute top-1/2 left-0 transform -translate-y-1/2  bg-transparent p-2 rounded-full cursor-pointer"
                 onClick={handlePrevSlide}
               >
                 &lt;
               </button>
               <button
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-transparent p-2 rounded-full"
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-transparent p-2 rounded-full cursor-pointer"
                 onClick={handleNextSlide}
               >
                 &gt;
@@ -138,7 +138,7 @@ function LandingPage() {
           {carouselImages && carouselImages.map((_, index) => (
             <button
               key={index}
-              className={`w-3 h-3 rounded-full mx-2 ${currentSlide === index ? "bg-gray-600" : "bg-gray-400"
+              className={`w-3 h-3 rounded-full mx-2 cursor-pointer ${currentSlide === index ? "bg-gray-600" : "bg-gray-400"
                 }`}
               onClick={() => handleDotClick(index)}
             ></button>
