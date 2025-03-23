@@ -210,6 +210,8 @@ function CategorySection() {
                         {filterProducts.map((product, index) => (
                             <Card key={index} product={product} categoryName={categoryName} />
                         ))}
+
+                        {filterProducts.length === 0 && <p>No products found.</p>}
                     </div>
                 </div>
             </div>

@@ -8,6 +8,9 @@ import axios from 'axios';
 const Register = () => {
 
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,7 +19,7 @@ const Register = () => {
 
   const { isLoading, setIsLoading } = useContext(AppContext);
 
- 
+
   const validationRules = [
     { text: "At least 8 characters", isValid: formData.password.length >= 8 },
     { text: "At least one uppercase letter (A-Z)", isValid: /[A-Z]/.test(formData.password) },
@@ -36,7 +39,7 @@ const Register = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
- 
+
   };
 
   // Handle form submission
@@ -104,8 +107,9 @@ const Register = () => {
             <label className="block text-sm font-medium mb-1" htmlFor="password">
               Password
             </label>
+            <div className="relative">
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
               name="password"
               value={formData.password}
@@ -113,34 +117,36 @@ const Register = () => {
               className="w-full px-3 py-2 border border-slate-400 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               required
             />
+                  <span 
+                    className="absolute top-2 right-3 text-sm cursor-pointer text-gray-500"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <i className="fa-solid fa-eye-slash"></i> : <i className="fa-solid fa-eye"></i>}
+                  </span>
+                </div>
+
           </div>
           <div className='mb-2 ml-4'>
-            {/* <ul className="list-disc">
-            { passwordInstructions.map((inst) =>{
-              return <li  className={`list-disc ${inst.valid && 'marker:text-green-500'}`}>{inst.message}</li>
-            })} */}
-            {/* </ul> */}
-            {/* Password Criteria List */}
-      <ul className="list-disc pl-5 space-y-1">
-        {validationRules.map((rule, index) => (
-          <li key={index} className={`${rule.isValid ? "marker:text-green-500" : "marker:text-red-500"}`}>
-            {rule.text}
-          </li>
-        ))}
-      </ul>
-           
-            
+
+            <ul className="list-disc pl-5 space-y-1">
+              {validationRules.map((rule, index) => (
+                <li key={index} className={`${rule.isValid ? "marker:text-green-500" : "marker:text-red-500"}`}>
+                  {rule.text}
+                </li>
+              ))}
+            </ul>
+
+
           </div>
-        
+
           <button
-  type="submit"
-  className={` w-full ${
-    isFormInvalid ? 'disabled-button' : 'primary-button'
-  }`}
-  disabled={isFormInvalid}
->
-  Register
-</button>
+            type="submit"
+            className={` w-full ${isFormInvalid ? 'disabled-button' : 'primary-button'
+              }`}
+            disabled={isFormInvalid}
+          >
+            Register
+          </button>
         </form>
         <div className="mt-4 text-center">
           <p className="text-sm">

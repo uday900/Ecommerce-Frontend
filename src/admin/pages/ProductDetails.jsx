@@ -23,9 +23,10 @@ const ProductDetails = () => {
 
   function onConfirm(isConfirmed) {
     if (isConfirmed) {
+      
+      console.log("confirm to delete")
       deleteProduct(productId);
       navigate('/admin/dashboard')
-      console.log("confirm to delete")
     }
     setIsModalOpen(false);
   }
@@ -115,7 +116,7 @@ const ProductDetails = () => {
             </li>
             <li>
               <strong>Colors: </strong>
-              { console.log(product.colors)}
+              {/* { console.log(product.colors)} */}
               {product.colors ? product.colors.map((color, index) => (
                 <span key={index} className="bg-gray-200 hover:bg-gray-400 text-gray-800 px-2 py-1 rounded mr-1 cursor-pointer">
                   {color}

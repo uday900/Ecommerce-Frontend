@@ -78,7 +78,7 @@ function LandingPage() {
     return <ErrorPage/>
   }
   return (
-    <div >
+    <div className='min-h-screen'>
       {isLoading && <Loading />}
       {error && <p className='text-center text-red-500'>{error}</p>}
 

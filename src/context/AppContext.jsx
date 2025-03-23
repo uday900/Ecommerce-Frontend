@@ -6,7 +6,7 @@ import api from "../api/api";
 export const newImageUrl = `data:image/jpeg;base64,`
 export const AppContext = createContext();
 
-export const BASE_URL = "http://localhost:8080";
+export const BASE_URL = import.meta.env.VITE_BACKEND_API;
 export const AppProvider = ({ children }) => {
 
     const [product, setProduct] = useState({});
@@ -349,9 +349,11 @@ export const AppProvider = ({ children }) => {
             // const response =await axios.get(`${BASE_URL}/products/fetch/category?categoryName=${categoryName}`);
             const response = await api.get(`/products/fetch/category?categoryName=${categoryName}`);
 
+            console.log(response)
             if (response.data.status == 200) {
                 setProducts(response.data.products);
                 setIsLoading(false);
+                setFailedToFetch(false);
                 return response.data.products;
             } else {
                 // setError(response.data.message);
