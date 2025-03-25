@@ -4,10 +4,10 @@ import axios from 'axios';
 import { AppContext, newImageUrl } from '../../context/AppContext';
 import Loading from '../../common-componets/Loading';
 import SampleProductsInLandingPage from './SampleProductsInLandingPage';
-import toast from 'react-hot-toast';
 import { set } from 'react-hook-form';
 import api from '../../api/api';
 import AddReview from './AddReview';
+import { toast, ToastContainer } from 'react-toastify';
 
 function SingleProduct() {
 
@@ -54,8 +54,7 @@ function SingleProduct() {
 
     } else {
       toast.error("Please login to add to cart");
-      // navigate('/login');
-
+     
     }
   };
 
@@ -147,10 +146,13 @@ function SingleProduct() {
 
     try {
       const response = await api.delete(`/product/reviews/${reviewId}/${userId}`);
+      console.log(response)
+      // if(response.status == 4)
+     
       if (response != null && response.status == 200) {
-        toast.success("Review deleted successfully");
+        toast.success(response.data);
         fetchProductReviews(productId);
-        console.log("first")
+        // console.log("first")
       } else {
         toast.error("Error deleting review");
       }
@@ -187,7 +189,7 @@ function SingleProduct() {
     // fetching reviews
     fetchProductReviews(productId);
     console.log("reviews", reviews);
-  }, [product]);
+  }, [product]);  
 
   useEffect(() => {
     if (isAuthenticated && user != null) {

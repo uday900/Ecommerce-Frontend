@@ -6,8 +6,6 @@ import Loading from './Loading';
 
 function SearchProducts() {
   const { searchValue } = useParams();
-
-
   const {
     fetchProductsBySearchValue,
     products,

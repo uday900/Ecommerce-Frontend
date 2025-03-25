@@ -68,6 +68,9 @@ const AddProduct = () => {
       // Add product
       addProduct(formData)
       reset();  
+    
+      setColors([]); // Clear the array of colors
+      setSizes([]); // Clear the array of sizes
 
 
 
@@ -194,7 +197,7 @@ const AddProduct = () => {
 
               <div className="flex gap-4 mb-4">
                 <div className="w-1/2">
-                  <label className="block text-sm font-medium mb-2">Sizes (Optional)</label>
+                  <label className="block text-sm font-medium mb-2">Sizes/Specifications (Optional)</label>
 
                   <div>
                     <div className="flex gap-2 items-center mb-4">
@@ -206,8 +209,10 @@ const AddProduct = () => {
                         className="w-full border border-gray-300 rounded-lg p-2"
                       />
                       <button
-                        onClick={handleAddSize}
-                        className="secondary-button"
+                        type="button"
+                        onClick={()=>handleAddSize()}
+                        className={`${!size ? "disabled-button": "primary-button"}`}
+                        disabled={!size}  
                       >
                         Add
                       </button>
@@ -244,8 +249,10 @@ const AddProduct = () => {
                         className="w-full border border-gray-300 rounded-lg p-2"
                       />
                       <button
-                        onClick={handleAddColor}
-                        className="secondary-button"
+                      type='button'
+                        onClick={()=> handleAddColor()}
+                        className={`${!color ? "disabled-button": "primary-button"}`}
+                        disabled={!color}
                       >
                         Add
                       </button>

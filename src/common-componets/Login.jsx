@@ -2,9 +2,9 @@ import React, { useContext, useState } from 'react';
 import image from '../assests/login-page-front-image.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
-import toast from 'react-hot-toast';
 import api from '../api/api';
 import Loading from './Loading';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const navigate = useNavigate();

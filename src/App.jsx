@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { lazy, Suspense, useContext, useEffect } from "react";
 import { AppContext } from "./context/AppContext";
-import { Toaster } from "react-hot-toast";
+// import { Toaster } from "react-hot-toast";
 import ScrollToTop from "./common-componets/ScrollToTop";
 import Navbar from "./common-componets/Navbar";
 import Footer from "./common-componets/Footer";
@@ -11,6 +11,7 @@ import Loading from "./common-componets/Loading";
 import LandingPage from "./user/pages/LandingPage";
 import Login from "./common-componets/Login";
 import Register from "./common-componets/Register";
+import { ToastContainer } from "react-toastify";
 
 // Lazy load remaining components
 const AdminRoutes = lazy(() => import("./admin/AdminRoutes"));
@@ -56,9 +57,11 @@ function App() {
             </Suspense>
           }
         />
+
+        <Route path="/test" element={<Loading />} />
       </Routes>
 
-      <Toaster position="top-right" />
+      <ToastContainer position="top-right" />
       <Footer />
     </>
   );

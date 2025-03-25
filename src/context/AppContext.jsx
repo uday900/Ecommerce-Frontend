@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useState } from "react";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import api from "../api/api";
 
 export const newImageUrl = `data:image/jpeg;base64,`
@@ -349,7 +350,7 @@ export const AppProvider = ({ children }) => {
             // const response =await axios.get(`${BASE_URL}/products/fetch/category?categoryName=${categoryName}`);
             const response = await api.get(`/products/fetch/category?categoryName=${categoryName}`);
 
-            console.log(response)
+            // console.log(response)
             if (response.data.status == 200) {
                 setProducts(response.data.products);
                 setIsLoading(false);

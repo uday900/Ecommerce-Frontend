@@ -2,9 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import Loading from "./Loading";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import ErrorPage from "./Errorpage";
 import { FaSignOutAlt } from "react-icons/fa";
+import { FcSearch } from "react-icons/fc";
+import { IoClose } from "react-icons/io5";
+import { IoIosMenu, IoIosSearch } from "react-icons/io";
 
 const Navbar = () => {
   const path = useLocation();
@@ -61,7 +65,7 @@ const Navbar = () => {
       <div className="flex items-center ">
         {/* Logo */}
         <div className="text-2xl font-bold text-black mx-4">
-          <Link to="/">Shop<span className="text-blue-500">Ease</span></Link>
+          <Link to="/">Darla<span className="text-blue-500">Mart</span></Link>
         </div>
         <div className="hidden lg:flex space-x-6 text-gray-600 font-medium">
           {categories.slice(0, 3).map((category) => (
@@ -97,7 +101,8 @@ const Navbar = () => {
                 required />
               <button className="cursor-pointer "
                 onClick={() => searchValue && navigate(`/search/${searchValue}`)}>
-                <i class="fas fa-search absolute top-2 right-2 text-gray-400 hover:text-blue-600"></i>
+                {/* <i class="fas fa-search absolute top-2 right-2 text-gray-400 hover:text-blue-600"></i> */}
+                <IoIosSearch className="absolute top-2 right-2 text-gray-400 hover:text-blue-600 text-xl"/>
               </button>
             </form>
           </div>
@@ -113,14 +118,16 @@ const Navbar = () => {
           className="md:hidden text-gray-600 hover:text-black"
           aria-label="Open Search"
         >
-          <i className="fas fa-search text-lg"></i>
+          {/* <i className="fas fa-search text-lg"></i> */}
+          <IoIosSearch className="text-xl" />
         </button>
         <button
           className="md:hidden text-gray-600 hover:text-black"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle Menu"
         >
-          <i className="fas fa-bars text-lg"></i>
+         {menuOpen? <IoClose className="text-xl" /> : <IoIosMenu className="text-xl"/> } 
+          {/* <i className="fas fa-bars text-lg"></i> */}
         </button>
       </div>
 
@@ -159,17 +166,21 @@ const Navbar = () => {
         <div className="absolute top-full left-0 w-full bg-white shadow-lg p-4 flex flex-col items-center space-y-4 md:hidden">
           {isAuthenticated ? (
             isAdmin ? (
-              <Link to='/admin/dashboard' className="hover:underline">Admin Dashboard</Link>
+              <Link to='/admin/dashboard' className="hover:underline"
+                onClick={() => setMenuOpen(false)}>Admin Dashboard</Link>
             ) : (
-              <Link to={`/user/profile/${user.id}`} className="hover:underline">
+              <Link to={`/user/profile/${user.id}`} className="hover:underline" onClick={() => setMenuOpen(false)}>
                 <i className="fa-regular fa-user"></i>
                 <span className="ml-2 text-gray-600 "> {user.name}</span>
               </Link>
             )
           ) : (
             <>
-              <Link to="/login" className="text-gray-800 hover:underline">Login</Link>
-              <Link to="/register" className="text-gray-800 hover:underline">Register</Link>
+              <Link to="/login" className="text-gray-800 hover:underline"
+              onClick={() => setMenuOpen(false)}
+              >Login</Link>
+              <Link to="/register" className="text-gray-800 hover:underline" onClick={() => setMenuOpen(false)}
+              >Register</Link>
             </>
           )}
           

@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import Loading from './Loading';
-import toast from 'react-hot-toast';
 import api from '../api/api';
+import { toast } from 'react-toastify';
 
 function ForgotPassword() {
     const navigate = useNavigate();

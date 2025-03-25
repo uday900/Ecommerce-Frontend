@@ -3,7 +3,8 @@ import { AppContext, newImageUrl } from '../../context/AppContext';
 import emptyCartImage from '../../assests/empty-cart.webp'
 import { useParams } from 'react-router-dom';
 import Loading from '../../common-componets/Loading';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import AuthRequired from '../../common-componets/AuthRequired';
 
 function Cart() {
@@ -115,7 +116,7 @@ function Cart() {
                       </button>
                       <div className="inline-block ml-4">
                         <button
-                          className="bg-slate-400 text-white text-sm py-1 px-3 rounded-lg shadow-md hover:bg-slate-500"
+                          className="bg-slate-400 text-white text-sm py-1 px-3 rounded-lg shadow-md hover:bg-slate-500 cursor-pointer"
                           onClick={() => incrementQuantity(user.id, cartItem.id)}
                         
                         >
@@ -123,7 +124,7 @@ function Cart() {
                         </button>
                         <span className="mx-2">{cartItem.quantity}</span>
                         <button
-                          className="bg-slate-400 text-white text-sm py-1 px-3 rounded-lg shadow-md hover:bg-slate-500"
+                          className={`${cartItem.quantity === 1 ? 'disabled-button py-1 px-3' : 'bg-slate-400 text-white text-sm py-1 px-3 rounded-lg shadow-md hover:bg-slate-500 cursor-pointer'}`}  
                           onClick={() => decrementQuantity(user.id, cartItem.id)}
                           disabled={cartItem.quantity === 1}
                         >

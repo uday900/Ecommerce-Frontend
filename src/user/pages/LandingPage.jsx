@@ -47,12 +47,7 @@ function LandingPage() {
     return () => clearInterval(interval);
   }, [carouselImages.length])
 
-  // useEffect(()=>{
-  //   if(failedToFetch){
-      
-  //     return <ErrorPage/>
-  //   }
-  // },[failedToFetch, setFailedToFetch])
+ 
 
   useEffect(() => {
     async function loadProducts() {

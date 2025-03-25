@@ -140,6 +140,7 @@ const UpdateProduct = () => {
           <div className="bg-white p-6 rounded-lg w-full max-w-3xl">
             <h2 className="text-2xl font-bold mb-4">Update Product</h2>
 
+            {/* Form fields */}
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">Product Name</label>
@@ -174,18 +175,7 @@ const UpdateProduct = () => {
                     ))}
                   </select>
                 </div>
-{/* 
-                <div className="w-1/2">
-                  <label className="block text-sm font-medium mb-2">Rating</label>
-                  <input
-                    type="number"
-                    step="0.1"
-                    max="5"
-                    className="w-full border border-gray-300 rounded-lg p-2"
-                    {...register("rating", { required: true })}
-                    placeholder="Enter rating"
-                  />
-                </div> */}
+
               </div>
 
 

@@ -2,7 +2,8 @@ import React, { use, useContext, useEffect } from 'react'
 import { useState } from "react";
 import { AppContext } from '../../context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import api from '../../api/api';
 
 export default function AddReview({ productId }) {
@@ -29,7 +30,10 @@ export default function AddReview({ productId }) {
       return;
     }
 
-
+    if (user.role === "ADMIN") {
+      toast.error("Admins cannot add reviews");
+      return;
+    }
     setIsLoading(true);
     console.log("Adding review...");
 

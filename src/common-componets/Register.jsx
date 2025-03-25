@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppContext, BASE_URL } from '../context/AppContext';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import Loading from './Loading';
 import axios from 'axios';
 
