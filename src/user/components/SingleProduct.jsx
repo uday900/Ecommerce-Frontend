@@ -8,6 +8,7 @@ import { set } from 'react-hook-form';
 import api from '../../api/api';
 import AddReview from './AddReview';
 import { toast, ToastContainer } from 'react-toastify';
+import ErrorPage from '../../common-componets/Errorpage';
 
 function SingleProduct() {
 
@@ -37,11 +38,6 @@ function SingleProduct() {
 
   const [stars, setStars] = useState([1, 2, 3, 4, 5]);
   //  const stars = [];
-
-  useEffect(() => {
-    fetchProductById(productId);
-    fetchProductsByCategory(categoryName);
-  }, [productId, categoryName]);
 
 
 
@@ -185,14 +181,28 @@ function SingleProduct() {
     isLoggedIn();
   }, [])
 
+  // useEffect(() => {
+  //   // fetching reviews
+  //   fetchProductReviews(productId);
+  //   console.log("reviews", reviews);
+  // }, [product]);  
+  
   useEffect(() => {
-    // fetching reviews
-    fetchProductReviews(productId);
-    console.log("reviews", reviews);
-  }, [product]);  
+    if (productId) {
+      fetchProductById(productId);
+      fetchProductsByCategory(categoryName);
+      fetchProductReviews(productId);  // Ensure reviews are fetched after the product
+    }
+  }, [productId, categoryName]);
+
+  // useEffect(() => {
+  //   fetchProductById(productId);
+  //   fetchProductsByCategory(categoryName);
+  // }, [productId, categoryName]);
+
 
   useEffect(() => {
-    if (isAuthenticated && user != null) {
+    if (isAuthenticated && user ) {
 
       // Filter out matching userId reviews
       const userReviews = reviews.filter(review => review.userId === user.id);
@@ -202,13 +212,15 @@ function SingleProduct() {
 
       // Merge them with user reviews first
       const sortedReviews = [...userReviews, ...otherReviews];
-
-      setReviews(sortedReviews);
+      if (JSON.stringify(sortedReviews) !== JSON.stringify(reviews)) {
+        setReviews(sortedReviews);
+      }
+      // setReviews(sortedReviews);
     }
   }, [isAuthenticated, user, reviews]);
 
   if (failedToFetch) {
-    return <div>"Failed to fetch data from the server. Please try again later."</div>;
+    return <ErrorPage/>;
   }
 
   return (

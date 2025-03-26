@@ -73,7 +73,7 @@ export default function ManageCategories() {
         <ConfirmationModal
           setIsConfirmationModalOpen={setIsConfirmationModalOpen}
           onConfirm={onConfirm}
-          message={`Are you sure you want to delete this category?`}
+          message={`Are you sure you want to delete this category? All products in this category will also be deleted.`}
         />
       )}
       {isLoading && <Loading />}

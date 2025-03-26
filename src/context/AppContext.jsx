@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 // import toast from "react-hot-toast";
 import { toast } from "react-toastify";
 import api from "../api/api";
+import { useNavigate } from "react-router-dom";
 
 export const newImageUrl = `data:image/jpeg;base64,`
 export const AppContext = createContext();
@@ -49,6 +50,7 @@ export const AppProvider = ({ children }) => {
     const [message, setMessage] = useState("");
     const [failedToFetch, setFailedToFetch] = useState(false);
 
+    // const navigate = useNavigate();
     async function isLoggedIn() {
 
         const token = localStorage.getItem("token");
@@ -61,6 +63,7 @@ export const AppProvider = ({ children }) => {
             // console.log("checking user exists or not")
             // console.log(token)
             setIsLoading(true);
+            setFailedToFetch(false);    
             try {
                 const response = await api.post(`/auth/verify-account?token=${token}`)
                 // console.log(response, "in logged in")
@@ -85,8 +88,15 @@ export const AppProvider = ({ children }) => {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
 
-                // setFailedToFetch(true);
+                setFailedToFetch(true);
+                setUser({});
+                setIsAuthenticated(false);
+                setIsAdmin(false);
+                setIsUser(false);
+                // navigate('/login');
 
+                // navigate to login page
+                Windows.location.href = "/login";
                 
                 console.log("Error checking login status:", error);
                 setIsLoading(false);
@@ -110,6 +120,7 @@ export const AppProvider = ({ children }) => {
     // API calls
     async function fetchCategories() {
         setIsLoading(true);
+        setFailedToFetch(false);
         console.log("Fetching categories...");
         try {
             const response = await api.get(`/category/fetch`);

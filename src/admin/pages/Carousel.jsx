@@ -27,6 +27,7 @@ function Carousel() {
   // Function to delete an image
   function handleDeleteImage(imageId) {
     deleteCarouselImage(imageId);
+    setNewImage(null);
   }
 
   useEffect(()=>{

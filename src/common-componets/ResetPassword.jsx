@@ -19,6 +19,21 @@ function ResetPassword() {
 
   const { isLoading, setIsLoading } = useContext(AppContext);
 
+  const validationRules = [
+    { text: "At least 8 characters", isValid: password.length >= 8 },
+    { text: "At least one uppercase letter (A-Z)", isValid: /[A-Z]/.test(password) },
+    { text: "At least one lowercase letter (a-z)", isValid: /[a-z]/.test(password) },
+    { text: "At least one number (0-9)", isValid: /[0-9]/.test(password) },
+    { text: "At least one special character (!@#$%^&*)", isValid: /[!@#$%^&*(),.?":{}|<>]/.test(password) },
+  ];
+
+  const isFormInvalid =
+    password === "" ||
+    confirmedPassword === "" ||
+    password !== confirmedPassword ||
+    validationRules.some(rule => !rule.isValid);
+
+
   useEffect(() => {
     if (!token || !username) {
       navigate('/forgot-password');
@@ -37,13 +52,20 @@ function ResetPassword() {
       setIsLoading(true);
       const response = await api.post(`/auth/reset-password?email=${username}&token=${token}&newPassword=${password}`);
 
-      if (response.data.status === 200) {
+      console.log(response)
+      if (response && response.data.status === 200) {
         toast.success('Password reset successful');
         setPassword('');
         setConfirmedPassword('');
         navigate('/login');
-      } else {
-        toast.error('Password reset failed');
+      } else if(response.data.status === 404){
+        toast.error(response.data.message);
+        navigate('/forgot-password'); 
+
+      }
+      else {
+        toast.error('Password reset failed or token is expired');
+        navigate('/forgot-password'); 
       }
     } catch (error) {
       toast.error('Something went wrong. Please try again later.');
@@ -53,7 +75,7 @@ function ResetPassword() {
   };
 
   return (
-    <div className="flex h-screen mt-5 justify-center text-gray-800">
+    <div className="flex h-auto min-h-screen mt-5 justify-center text-gray-800">
       <div className="w-3/4 max-w-md">
         <h2 className="text-2xl font-semibold mb-4 text-center">Reset Password</h2>
         <form onSubmit={handleFormSubmit}>
@@ -77,6 +99,18 @@ function ResetPassword() {
               </span>
             </div>
           </div>
+          <div className='mb-2 ml-4'>
+
+<ul className="list-disc pl-5 space-y-1">
+  {validationRules.map((rule, index) => (
+    <li key={index} className={`${rule.isValid ? "marker:text-green-500" : "marker:text-red-500"}`}>
+      {rule.text}
+    </li>
+  ))}
+</ul>
+
+
+</div>
 
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1" htmlFor="confirmedPassword">
@@ -99,13 +133,18 @@ function ResetPassword() {
             </div>
           </div>
 
+
           <button
             type="submit"
-            className={`w-full ${isLoading || !password || !confirmedPassword ? 'disabled-button' : 'primary-button'}`}
-            disabled={isLoading || !password || !confirmedPassword}
+            className={` w-full ${isFormInvalid ? 'disabled-button' : 'primary-button'
+              }`}
+            disabled={isFormInvalid}
           >
             {isLoading ? 'Resetting...' : 'Reset Password'}
           </button>
+
+
+        
         </form>
 
         <div className="mt-4 text-center">

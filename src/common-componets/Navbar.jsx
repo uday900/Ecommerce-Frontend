@@ -31,8 +31,27 @@ const Navbar = () => {
     setInfo,
     isUser,
     isFailedToFetch,
+    setFailedToFetch,
   } = useContext(AppContext);
 
+  async function logOutApi() {
+   
+    setIsLoading(true);
+    setFailedToFetch(false);
+
+    try {
+      const response = await api.post(`/users/logout`);
+      if (response && response.status === 200) {
+        toast.success(response.data);
+      } else {
+        toast.error("Failed to logout or user already logged out");
+      }
+    } catch (error) {
+      toast.error("Failed to logout or user already logged out");
+    } finally {
+      setIsLoading(false);
+    }
+  }
   function handleLogout() {
     setIsLoading(true);
     localStorage.removeItem("token");
@@ -41,8 +60,12 @@ const Navbar = () => {
     setUser(null);
     setInfo(null);
     setIsLoading(false);
-    navigate("/");
+    
+    logOutApi();
+    
     toast.success("Logged out successfully");
+    navigate("/login");
+
   }
 
   useEffect(() => {

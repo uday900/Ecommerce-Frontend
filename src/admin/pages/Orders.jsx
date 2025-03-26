@@ -10,6 +10,7 @@ function Orders() {
   const [sortOrder, setSortOrder] = useState('default');
   const [statusFilter, setStatusFilter] = useState('default');
 
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -65,7 +66,7 @@ function Orders() {
           <option value="PENDING">PENDING</option>
           <option value="SHIPPED">SHIPPED</option>
           <option value="DELIVERED">DELIVERED</option>
-          <option value="CANCELLED">CANCELLED</option>
+          <option value="CANCELED">CANCELED</option>
         </select>
       </div>
       
@@ -99,10 +100,10 @@ function Orders() {
                       onChange={(e) => updateOrderStatus(order.id, e.target.value)}
                     >
                       <option value="PENDING">PENDING</option>
-                      <option value="PROCESSING">PROCESSING</option>
+                      {/* <option value="PROCESSING">PROCESSING</option> */}
                       <option value="SHIPPED">SHIPPED</option>
                       <option value="DELIVERED">DELIVERED</option>
-                      <option value="CANCELLED">CANCELLED</option>
+                      <option value="CANCELED">CANCELED</option>
                     </select>
                   </td>
                 </tr>
